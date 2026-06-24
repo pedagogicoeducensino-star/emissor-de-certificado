@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Portal de Certificação | Educ</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================
+       PALETA DE CORES EDUC & TEMA 3D CUSTOMIZADO
+       ========================================== */
+    :root { 
+      --escola-laranja: #ff6b00; 
+      --escola-ouro: #d4af37; 
+      --escola-creme: #fffdf5;
+      --escola-cinza-claro: #f4f5f7;
+      --escola-cinza-escuro: #4a4a4a;
+      --escola-preto: #1a1a1a; 
+    }
+    
+    body { background-color: var(--escola-cinza-claro); font-family: 'Segoe UI', sans-serif; padding: 25px 15px; }
+    
+    /* Cartão Principal com leve elevação */
+    .card-sistema { 
+      max-width: 1250px; 
+      margin: auto; 
+      background: #ffffff; 
+      padding: 30px; 
+      border-radius: 15px; 
+      border-top: 6px solid var(--escola-laranja); 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+    }
+    
+    .oculto { display: none !important; }
+
+    /* ==========================================
+       BOTÕES 3D (Laranja e Ouro)
+       ========================================== */
+    .btn-theme-primary {
+      background: linear-gradient(145deg, #ff8226, #e65c00);
+      color: #fff !important;
+      border: none;
+      box-shadow: 0 5px 10px rgba(230, 92, 0, 0.3), inset 0 2px 2px rgba(255, 255, 255, 0.3);
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      transition: all 0.2s ease-in-out;
+    }
+    .btn-theme-primary:hover {
+      background: linear-gradient(145deg, #e65c00, #cc5200);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(230, 92, 0, 0.4), inset 0 2px 2px rgba(255, 255, 255, 0.3);
+    }
+    .btn-theme-primary:active {
+      transform: translateY(1px);
+      box-shadow: inset 0 3px 5px rgba(0,0,0,0.2);
+    }
+
+    .btn-theme-outline {
+      background: linear-gradient(145deg, #ffffff, #f0f0f0);
+      color: var(--escola-cinza-escuro) !important;
+      border: 1px solid #dcdcdc;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), inset 0 2px 2px #fff;
+      transition: all 0.2s ease-in-out;
+    }
+    .btn-theme-outline:hover {
+      background: #fff;
+      color: var(--escola-laranja) !important;
+      border-color: var(--escola-laranja);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(255, 107, 0, 0.15), inset 0 2px 2px #fff;
+    }
+
+    .btn-theme-action {
+      background: linear-gradient(145deg, #ffdf00, #d4af37);
+      color: #1a1a1a !important;
+      border: none;
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.6);
+      text-shadow: 1px 1px 1px rgba(255,255,255,0.5);
+      transition: all 0.2s ease-in-out;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .btn-theme-action:hover {
+      background: linear-gradient(145deg, #f0c900, #b8962e);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5), inset 0 2px 3px rgba(255, 255, 255, 0.5);
+    }
+
+    /* ==========================================
+       ÍCONES 3D E BADGES
+       ========================================== */
+    .icon-3d {
+      color: var(--escola-laranja);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15), -1px -1px 1px rgba(255, 255, 255, 0.8);
+    }
+    .text-theme { color: var(--escola-laranja) !important; }
+
+    .badge-theme-ouro {
+      background: linear-gradient(145deg, #d4af37, #b8962e);
+      color: #fff;
+      box-shadow: 1px 2px 5px rgba(0,0,0,0.2);
+    }
+    .badge-status-ok { background: linear-gradient(145deg, #ff8226, #e65c00); color: #fff; text-shadow: 1px 1px 1px rgba(0,0,0,0.2); box-shadow: 1px 2px 4px rgba(230,92,0,0.3); }
+    .badge-status-bad { background: linear-gradient(145deg, #8a9299, #5c636a); color: #fff; text-shadow: 1px 1px 1px rgba(0,0,0,0.2); box-shadow: 1px 2px 4px rgba(0,0,0,0.2); }
+
+    /* ==========================================
+       NAVEGAÇÃO E TABELAS UI
+       ========================================== */
+    .nav-tabs .nav-link { color: var(--escola-cinza-escuro); font-weight: 600; cursor: pointer; transition: all 0.3s; }
+    .nav-tabs .nav-link:hover { color: var(--escola-laranja); }
+    .nav-tabs .nav-link.active { 
+      color: var(--escola-laranja); 
+      border-bottom: 3px solid var(--escola-laranja); 
+      background: transparent; border-top: none; border-left: none; border-right: none; 
+    }
+    
+    .table-ui th { background-color: var(--escola-cinza-claro); color: #444; font-size: 13px; text-transform: uppercase; border-bottom: 2px solid var(--escola-ouro); }
+    .table-ui td { font-size: 14px; vertical-align: middle; }
+    .table-ui tbody tr:hover { background-color: var(--escola-creme); }
+
+    /* Caixas de Fundo Creme */
+    .box-creme {
+      background-color: var(--escola-creme);
+      border: 1px solid #e8e3c7;
+      border-left: 4px solid var(--escola-ouro);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+
+    #printArea { display: none; }
+    
+    /* ======== ESTILOS DO CERTIFICADO IMPRESSO (INTACTO) ======== */
+    @media print {
+      @page { size: A4 landscape; margin: 0; }
+      body { padding: 0; margin: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      #interfaceUI { display: none !important; }
+      #printArea { display: block !important; }
+      
+      .pagina-cert { width: 297mm; height: 210mm; page-break-after: always; position: relative; box-sizing: border-box; }
+      .frente-bg { background: url('https://i.postimg.cc/VNwGwdCP/Frente.jpg') no-repeat center; background-size: 297mm 210mm; } 
+      .verso-bg { background: url('https://i.postimg.cc/2ygGK6YS/Fundo.jpg') no-repeat center; background-size: 297mm 210mm; }
+
+      .cert-area-frente { position: absolute; top: 0; left: 0; width: 100%; padding-top: 105mm; text-align: center; }
+      .cert-texto-top { font-family: 'Jost', sans-serif; font-size: 16pt; font-weight: 400 !important; color: #1a1a1a; margin-bottom: 8mm; }
+      .cert-nome { font-family: 'Vladimir Script', 'Great Vibes', cursive; font-size: 52pt; color: #7A242B !important; font-weight: 400 !important; margin-bottom: 8mm; line-height: 1; }
+      .cert-detalhes { font-family: 'Jost', sans-serif; font-size: 15pt; color: #1a1a1a; font-weight: 400 !important; line-height: 1.5; padding: 0 40mm; text-align: center; }
+      .assinatura-aluno { position: absolute; bottom: 16mm; right: 55mm; text-align: center; font-family: 'Jost', sans-serif; font-size: 12pt; font-weight: 400 !important; color: #1a1a1a; }
+
+      .verso-container { padding: 15mm 20mm 6mm 20mm; font-family: 'Jost', sans-serif; font-weight: 400 !important; color: #1a1a1a; display: flex; flex-direction: column; height: 210mm; box-sizing: border-box; }
+      .tabela-notes { width: 100%; table-layout: fixed; border-collapse: collapse; margin-top: 5mm; font-size: 10pt; background: transparent !important; }
+      .tabela-notas th, .tabela-notas td { border: 0.5pt solid #1a1a1a; padding: 2px 5px; text-align: center; font-weight: 400 !important; background: transparent !important; }
+      .text-left { text-align: left !important; padding-left: 10px !important; }
+
+      /* Cabeçalho centralizado conforme solicitado */
+      .tabela-notas thead th:first-child { text-align: center !important; padding-left: 0 !important; }
+      .tabela-notas th:nth-child(1) { width: 34%; } .tabela-notas th:nth-child(2) { width: 11%; } .tabela-notas th:nth-child(3) { width: 11%; } .tabela-notas th:nth-child(4) { width: 11%; } .tabela-notas th:nth-child(5) { width: 11%; } .tabela-notas th:nth-child(6) { width: 11%; } .tabela-notas th:nth-child(7) { width: 11%; } 
+
+      .rodape-footer { margin-top: auto; width: 100%; padding-top: 15mm !important; }
+      .tabela-totais { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 10.5pt; margin-bottom: 4mm; background: transparent !important; }
+      .tabela-totais td { padding: 4px 5px; font-weight: 400 !important; background: transparent !important; border: 0.5pt solid #1a1a1a !important; }
+      .label-total { text-align: left !important; padding-left: 10px !important; width: 89%; }
+      .valor-total { text-align: center !important; width: 11%; }
+
+      .bloco-legal-1, .bloco-legal-2 { font-size: 8.5pt; line-height: 1.4; font-weight: 400 !important; }
+      .bloco-legal-1 { margin-bottom: 2mm; } 
+      .rodape-verso-flex { display: flex; justify-content: space-between; font-size: 8.5pt; font-weight: 400 !important; }
+      .col-esquerda { width: 55%; } .col-direita { width: 42%; padding-left: 10mm; }
+      .tabela-alinhamento-data { width: 100%; border: none; padding: 0; margin: 0; font-size: 8.5pt; }
+      .tabela-alinhamento-data td { border: none !important; padding: 0 !important; text-align: left; }
+      .assinatura-data { text-align: right; margin-top: 6mm; font-size: 9.5pt; font-weight: 400 !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="interfaceUI">
+    <div id="telaLogin" class="card-sistema" style="max-width: 400px; margin-top: 10vh;">
+      <div class="text-center mb-4">
+        <i class="fas fa-certificate fs-1 icon-3d mb-2"></i>
+        <h3 class="fw-bold text-dark">Portal Educ</h3>
+        <p class="text-muted small">Módulo de Emissão de Certificados</p>
+      </div>
+      <div class="mb-4">
+        <div class="input-group">
+          <span class="input-group-text bg-light border-0"><i class="fas fa-lock text-muted"></i></span>
+          <input type="password" id="pass" class="form-control bg-light border-0 py-2" placeholder="Código Emissor" onkeypress="if(event.key==='Enter') login()">
+        </div>
+      </div>
+      <button class="btn btn-theme-primary w-100 fw-bold py-2 fs-5" onclick="login()">ENTRAR</button>
+      <div id="erro" class="text-danger mt-2 text-center small fw-bold"></div>
+    </div>
+
+    <div id="telaPrincipal" class="card-sistema oculto">
+      <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+        <div class="d-flex align-items-center gap-3">
+          <i class="fas fa-award fs-2 icon-3d"></i>
+          <div>
+            <h4 class="fw-bold mb-0 text-dark">Certificação Oficial</h4>
+            <span id="userAtivo" class="badge badge-theme-ouro mt-1 px-3 py-1"></span>
+          </div>
+        </div>
+        <button class="btn btn-sm btn-outline-secondary fw-bold border-0" onclick="sair()"><i class="fas fa-sign-out-alt"></i> Sair do Sistema</button>
+      </div>
+
+      <ul class="nav nav-tabs mb-4">
+        <li class="nav-item"><a class="nav-link active" id="abaEmitir" onclick="trocarAba('emitir')"><i class="fas fa-plus-circle me-1"></i> Nova Emissão</a></li>
+        <li class="nav-item"><a class="nav-link" id="abaHistorico" onclick="trocarAba('historico')"><i class="fas fa-history me-1"></i> Histórico</a></li>
+      </ul>
+
+      <div id="conteudoEmitir">
+        
+        <div id="blocoSelecaoTipo" class="text-center py-5">
+          <h4 class="fw-bold text-dark mb-2">Qual documento deseja emitir?</h4>
+          <p class="text-muted mb-5">Selecione o layout e as regras que serão aplicadas.</p>
+          <div class="d-flex justify-content-center gap-4 flex-wrap">
+            <button class="btn btn-theme-primary btn-lg fw-bold py-4 px-4 rounded-4" onclick="iniciarModo('normal')" style="width: 320px;">
+              <i class="fas fa-graduation-cap fs-1 mb-3 d-block text-white opacity-75"></i> Conclusão Normal
+            </button>
+            <button class="btn btn-theme-outline btn-lg fw-bold py-4 px-4 rounded-4" onclick="iniciarModo('desistencia')" style="width: 320px;">
+              <i class="fas fa-user-edit fs-1 mb-3 d-block opacity-75"></i> Desistência de Disciplina
+            </button>
+          </div>
+        </div>
+
+        <div id="blocoFormulario" class="oculto">
+          
+          <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-white rounded border shadow-sm">
+            <h6 class="m-0 fw-bold text-theme"><i class="fas fa-sliders-h me-2"></i> MODO ATIVO: <span id="labelModoAtual" class="text-dark"></span></h6>
+            <button class="btn btn-sm btn-light border fw-bold text-muted" onclick="voltarSelecao()"><i class="fas fa-arrow-left"></i> Trocar Modelo</button>
+          </div>
+
+          <div class="row g-3 align-items-end mb-4 bg-white p-4 rounded border shadow-sm">
+            <div class="col-md-9">
+              <label class="fw-bold mb-2 small text-muted text-uppercase letter-spacing">Matrícula do Aluno no Sistema</label>
+              <input type="number" id="mat" class="form-control form-control-lg bg-light border-0" placeholder="Digite a matrícula exata (Ex: 850)">
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-theme-primary w-100 fw-bold" style="height: 48px;" id="btnBuscar" onclick="buscar()"><i class="fas fa-search me-1"></i> BUSCAR DADOS</button>
+            </div>
+          </div>
+
+          <div id="infoCertificado" class="oculto">
+            
+            <div class="p-4 rounded mb-4 box-creme">
+              <h5 class="fw-bold text-dark mb-4 border-bottom pb-2 border-warning border-opacity-25"><i class="fas fa-user-graduate text-theme me-2"></i> Dados do Aluno(a) e Registro</h5>
+              <div class="row g-3 mb-3">
+                <div class="col-md-6"><span class="small text-muted d-block fw-bold text-uppercase">Aluno(a):</span><span id="resNomeUI" class="fs-5 fw-bold text-dark"></span></div>
+                <div class="col-md-6"><span class="small text-muted d-block fw-bold text-uppercase">Curso Vinculado:</span><span id="resCursoUI" class="fs-5 fw-bold text-theme"></span></div>
+              </div>
+              <hr class="text-muted opacity-10 my-4">
+              <div class="row g-3">
+                <div class="col-md-4"><label class="small fw-bold text-muted">Início do Curso:</label><input type="date" id="dataIni" class="form-control border-0 bg-white shadow-sm"></div>
+                <div class="col-md-4"><label class="small fw-bold text-muted">Conclusão do Curso:</label><input type="date" id="dataFim" class="form-control border-0 bg-white shadow-sm"></div>
+                <div class="col-md-4"><label class="small fw-bold text-muted">Data do Rodapé e Registro:</label><input type="date" id="dataReg" class="form-control border-0 bg-white shadow-sm"></div>
+                <div class="col-md-6 mt-3"><label class="small fw-bold text-muted">Folha (FL n°):</label><input type="number" id="livroFl" class="form-control border-0 bg-white shadow-sm"></div>
+                <div class="col-md-6 mt-3"><label class="small fw-bold text-muted">Registro (N°):</label><input type="number" id="registroNum" class="form-control border-0 bg-white shadow-sm"></div>
+              </div>
+            </div>
+
+            <div class="mb-4 bg-white p-4 rounded border shadow-sm">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="fw-bold text-dark mb-0"><i class="fas fa-list-check text-theme me-2"></i> Conferência Pedagógica (Módulos)</h6>
+                <span class="badge badge-theme-ouro fs-6 py-2 px-3 shadow-sm" id="badgeStatusUI">Média Geral: <span id="resMediaUI"></span> | Status: <span id="resStatusGeral"></span></span>
+              </div>
+              <div class="table-responsive" style="max-height: 250px; border: 1px solid #dee2e6; border-radius: 8px;">
+                <table class="table table-ui table-hover mb-0 text-center">
+                  <thead id="headerPreview"></thead>
+                  <tbody id="corpoPreviewNotas"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <button class="btn btn-theme-action w-100 fw-bold py-3 fs-5 rounded-3" id="btnEmitir" onclick="salvarEEmitir()">
+              <i class="fas fa-print me-2"></i> GERAR E IMPRIMIR CERTIFICADO
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="conteudoHistorico" class="oculto">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-bold text-dark m-0"><i class="fas fa-archive text-theme me-2"></i> Certificados Emitidos</h5>
+          <button class="btn btn-sm btn-theme-outline fw-bold" onclick="carregarHistorico()"><i class="fas fa-sync-alt"></i> Atualizar Lista</button>
+        </div>
+        <div class="table-responsive bg-white p-2 rounded border shadow-sm" style="max-height: 500px;">
+          <table class="table table-ui table-hover text-center align-middle mb-0">
+            <thead>
+              <tr><th>Data Sist.</th><th>Aluno</th><th>Tipo</th><th>FL</th><th>Nº Reg.</th><th>Ações</th></tr>
+            </thead>
+            <tbody id="corpoHistorico"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="printArea">
+    <div class="pagina-cert frente-bg">
+      <div class="cert-area-frente">
+        <div class="cert-texto-top">A Educ Centro de Ensino Profissionalizante, no uso de suas atribuições, confere a</div>
+        <div class="cert-nome" id="pNome"></div>
+        <div class="cert-detalhes" id="blocoDetalhesFrente"></div>
+      </div>
+      <div class="assinatura-aluno">
+        <span id="pNomeAssinatura"></span><br>Aluno(a)
+      </div>
+    </div>
+
+    <div class="pagina-cert verso-bg verso-container">
+      <table class="tabela-notas">
+        <thead>
+          <tr>
+            <th class="text-left">DISCIPLINAS/MÓDULOS</th>
+            <th>P. T./P.</th><th>A.D.</th><th>A.S.</th>
+            <th>P.P.</th><th>MÉDIA</th><th>C.H.</th>
+          </tr>
+        </thead>
+        <tbody id="corpoNotasVerso"></tbody>
+      </table>
+
+      <div class="rodape-footer">
+        <table class="tabela-totais" id="blocoTotaisVerso"></table>
+
+        <div class="rodape-verso-flex">
+          <div class="col-esquerda">
+            <div class="bloco-legal-1" id="txtCriterios"></div>
+            <div class="bloco-legal-2" id="txtLeisNacionais">
+              Certificado válido em todo Território Nacional, conforme:<br>
+              Decreto Presidencial N° 5.154, de 23 de Julho de 2004, Art. 1° e 3°.<br>
+              Lei nº 9.394, 20 de Dezembro de 1996, Art. n° 39, Art. n° 40 e Art. n° 41.<br>
+              Constituição Federal, Art. n° 205 e Art. n° 206.<br>
+              que regulamentam a validade de Certificação de Cursos em Qualificação Profissional em todo o Brasil.
+            </div>
+          </div>
+
+          <div class="col-direita">
+            Legendas:<br>
+            A. T./P.: Avaliação Teórica/Prática<br>
+            A.D.: Atividades de Desempenho<br>
+            A.S.: Avaliação Socioeducacional<br>
+            C.H.: Carga Horaria<br>
+            DES.D.: Desistência de Disciplina<br>
+            P.P.: Práticas Profissionalizantes<br><br>
+            
+            <table class="tabela-alinhamento-data">
+              <tr><td colspan="2">Certificado Registrado em <span id="vDataRegistro"></span>.</td></tr>
+              <tr>
+                <td style="width: 53%;">FL n°: <span id="vFl"></span></td>
+                <td style="text-align: left;">N°: <span id="vNum"></span></td>
+              </tr>
+            </table>
+
+            <div class="assinatura-data" id="vLocalData"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ========================================================
+    // COLOQUE O SEU LINK GERADO PELO GOOGLE APPS SCRIPT AQUI:
+    const API_URL = "SUA_URL_DO_WEB_APP_DO_GOOGLE"; 
+    // ========================================================
+
+    let dadosAtuais = null;
+    let historicoData = [];
+    let tipoAtual = 'normal'; 
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById("dataReg").value = new Date().toISOString().split('T')[0];
+    });
+
+    // Motor Central de Comunicação Remota entre GitHub e Google Sheets
+    async function chamarAPI(payload) {
+      try {
+        let response = await fetch(API_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+        return await response.json();
+      } catch (error) {
+        alert("Falha de conexão com o Banco de Dados. Verifique o link da API ou a internet.");
+        return { sucesso: false, msg: error.message };
+      }
+    }
+
+    function iniciarModo(tipo) {
+      tipoAtual = tipo;
+      document.getElementById("blocoSelecaoTipo").classList.add("oculto");
+      document.getElementById("blocoFormulario").classList.remove("oculto");
+      document.getElementById("labelModoAtual").innerText = tipo === 'normal' ? "Conclusão Normal" : "Desistência de Disciplina";
+      
+      if (tipo === 'desistencia') {
+        document.getElementById("badgeStatusUI").classList.add("oculto");
+      } else {
+        document.getElementById("badgeStatusUI").classList.remove("oculto");
+      }
+    }
+
+    function voltarSelecao() {
+      document.getElementById("blocoFormulario").classList.add("oculto");
+      document.getElementById("infoCertificado").classList.add("oculto");
+      document.getElementById("blocoSelecaoTipo").classList.remove("oculto");
+      document.getElementById("mat").value = "";
+    }
+
+    function formatarDataPorExtenso(dataIso) {
+      if(!dataIso) return "";
+      let partes = dataIso.split('-');
+      if(partes.length !== 3) return dataIso;
+      let meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+      return `${partes[2]} de ${meses[parseInt(partes[1])-1]} de ${partes[0]}`;
+    }
+
+    function limparNome(n) {
+      if(!n) return "";
+      let limpo = n.toString().replace(/^CN\s*-\s*/i, '').replace(/\s*-\s*[A-Za-z]+$/i, '').trim();
+      return limpo.replace(/\s*-?\s*[vV]\s*\d+.*$/i, '').trim();
+    }
+
+    function trocarAba(a) {
+      document.getElementById("abaEmitir").classList.toggle("active", a==='emitir');
+      document.getElementById("abaHistorico").classList.toggle("active", a==='historico');
+      document.getElementById("conteudoEmitir").classList.toggle("oculto", a!=='emitir');
+      document.getElementById("conteudoHistorico").classList.toggle("oculto", a!=='historico');
+      if(a==='historico') carregarHistorico();
+    }
+
+    function formataStatusBadge(str) {
+      let st = (str || "").toLowerCase();
+      if (st.includes("aprovado")) return `<span class="badge badge-status-ok rounded-pill py-1 px-2">${str}</span>`;
+      if (st.includes("reprovado")) return `<span class="badge badge-status-bad rounded-pill py-1 px-2">${str}</span>`;
+      return `<span class="badge bg-secondary rounded-pill py-1 px-2">${str}</span>`;
+    }
+
+    function login() {
+      if(document.getElementById("pass").value === "1312892099") {
+        document.getElementById("userAtivo").innerText = "Emissor: Davi Felício";
+        document.getElementById("telaLogin").classList.add("oculto");
+        document.getElementById("telaPrincipal").classList.remove("oculto");
+      } else { alert("Código de acesso incorreto."); }
+    }
+
+    function sair() { location.reload(); }
+
+    async function buscar() {
+      let m = document.getElementById("mat").value;
+      if(!m) return alert("Digite a matrícula.");
+      let btn = document.getElementById("btnBuscar");
+      btn.innerHTML = `<i class="fas fa-spinner fa-spin me-1"></i> AGUARDE...`; btn.disabled = true;
+
+      let res = await chamarAPI({ acao: "buscar", matricula: m });
+      
+      btn.innerHTML = `<i class="fas fa-search me-1"></i> BUSCAR DADOS`; btn.disabled = false;
+      if(res.sucesso) {
+        dadosAtuais = res.dados;
+        document.getElementById("infoCertificado").classList.remove("oculto");
+        
+        document.getElementById("resNomeUI").innerText = res.dados.nome.toUpperCase();
+        document.getElementById("resCursoUI").innerText = limparNome(res.dados.curso);
+        
+        let mediaGeralNum = parseFloat(res.dados.mediaGeral.replace(',', '.'));
+        let minMedia = parseInt(res.dados.matricula) < 1000 ? 5.0 : 6.0;
+        let txtStatus = mediaGeralNum >= minMedia ? "APROVADO" : "REPROVADO";
+        
+        document.getElementById("resMediaUI").innerText = res.dados.mediaGeral;
+        document.getElementById("resStatusGeral").innerText = txtStatus;
+
+        let htmlHeaders = `<tr>
+          ${tipoAtual === 'desistencia' ? '<th style="width: 80px;" class="text-theme">Desistência?</th>' : ''}
+          <th class="text-start">Disciplina / Módulo</th>
+          <th>T. / P.</th><th>A.D.</th><th>A.S.</th><th>P.P.</th><th>Média</th><th>CH</th><th>Status</th>
+        </tr>`;
+        document.getElementById("headerPreview").innerHTML = htmlHeaders;
+
+        let htmlPreview = "";
+        res.dados.disciplinas.forEach((d, idx) => {
+          let isDefaultDesist = (d.mFinal === '-' || d.status.toLowerCase().includes('desist'));
+          let colChk = (tipoAtual === 'desistencia') ? `<td><input type="checkbox" class="form-check-input chk-desist border-warning" data-idx="${idx}" ${isDefaultDesist ? 'checked' : ''}></td>` : '';
+          
+          htmlPreview += `<tr>
+            ${colChk}
+            <td class="text-start fw-bold text-dark">${limparNome(d.nome)}</td>
+            <td>${d.nTeo}</td><td>${d.nDes}</td><td>${d.nSoc}</td><td>${d.nPra}</td>
+            <td class="fw-bold text-theme">${d.mFinal}</td><td>${d.ch}h</td>
+            <td>${formataStatusBadge(d.status)}</td>
+          </tr>`;
+        });
+        document.getElementById("corpoPreviewNotas").innerHTML = htmlPreview;
+      } else { alert(res.msg); }
+    }
+
+    async function salvarEEmitir() {
+      let d1 = document.getElementById("dataIni").value; let d2 = document.getElementById("dataFim").value;
+      let dReg = document.getElementById("dataReg").value;
+      let fl = document.getElementById("livroFl").value; let num = document.getElementById("registroNum").value;
+      
+      if(!d1 || !d2 || !dReg || !fl || !num) return alert("Preencha todos os campos obrigatórios.");
+      let btn = document.getElementById("btnEmitir"); btn.innerHTML = `<i class="fas fa-cog fa-spin me-2"></i> SALVANDO...`; btn.disabled = true;
+
+      let locAutomated = `Aracaju, ${formatarDataPorExtenso(dReg)}.`;
+      let tituloDoTipo = tipoAtual === 'normal' ? "Conclusão Normal" : "Desistência de Disciplina";
+
+      let registro = {
+        emissor: "Davi Felício", matricula: dadosAtuais.matricula, aluno: dadosAtuais.nome,
+        curso: limparNome(dadosAtuais.curso), media: dadosAtuais.mediaGeral, fl: fl, numero: num,
+        dataIni: d1, dataFim: d2, dataLocal: locAutomated, tipo: tituloDoTipo
+      };
+
+      let res = await chamarAPI({ acao: "salvar", registro: registro });
+
+      if (res.sucesso) {
+        btn.innerHTML = `<i class="fas fa-print me-2"></i> GERAR E IMPRIMIR CERTIFICADO`; btn.disabled = false;
+        
+        prepararImpressao(d1, d2, dReg, fl, num, locAutomated, dadosAtuais, tipoAtual);
+        window.print();
+        
+        setTimeout(() => {
+          document.getElementById("mat").value = "";
+          document.getElementById("dataIni").value = "";
+          document.getElementById("dataFim").value = "";
+          document.getElementById("livroFl").value = "";
+          document.getElementById("registroNum").value = "";
+          document.getElementById("dataReg").value = new Date().toISOString().split('T')[0];
+          document.getElementById("infoCertificado").classList.add("oculto");
+          document.title = "Portal de Certificação | Educ";
+        }, 1500);
+      } else {
+        alert("Erro ao registrar no banco: " + res.msg);
+        btn.innerHTML = `<i class="fas fa-print me-2"></i> GERAR E IMPRIMIR CERTIFICADO`; btn.disabled = false;
+      }
+    }
+
+    function prepararImpressao(d1, d2, dReg, fl, num, loc, obj, tipoDaVez) {
+      document.title = `Certificado de ${obj.nome.toUpperCase()}`;
+      let df = d2.split('-').reverse().join('/');
+      
+      document.getElementById("pNome").innerText = obj.nome;
+      document.getElementById("pNomeAssinatura").innerText = obj.nome;
+      
+      document.getElementById("vDataRegistro").innerText = formatarDataPorExtenso(dReg);
+      document.getElementById("vFl").innerText = fl;
+      document.getElementById("vNum").innerText = num;
+      document.getElementById("vLocalData").innerText = loc;
+
+      let chks = document.querySelectorAll('.chk-desist');
+      let mapaDesistencia = {};
+      chks.forEach(c => { mapaDesistencia[c.getAttribute('data-idx')] = c.checked; });
+
+      let h = "";
+      let totalChCalculado = 0;
+      
+      obj.disciplinas.forEach((d, idx) => {
+        let ehDesistencia = false;
+        if (tipoDaVez === 'desistencia') {
+          ehDesistencia = chks.length > 0 ? mapaDesistencia[idx] : (d.mFinal === '-' || d.status.toLowerCase().includes('desist'));
+        }
+
+        if (ehDesistencia) {
+          h += `<tr><td class="text-left">${limparNome(d.nome)}</td><td>DES.D.</td><td>DES.D.</td><td>DES.D.</td><td>DES.D.</td><td>DES.D.</td><td>-</td></tr>`;
+        } else {
+          h += `<tr><td class="text-left">${limparNome(d.nome)}</td><td>${d.nTeo}</td><td>${d.nDes}</td><td>${d.nSoc}</td><td>${d.nPra}</td><td>${d.mFinal}</td><td>${d.ch}</td></tr>`;
+          totalChCalculado += d.ch;
+        }
+      });
+      document.getElementById("corpoNotasVerso").innerHTML = h;
+
+      if (tipoDaVez === 'desistencia') {
+        document.getElementById("blocoDetalhesFrente").innerHTML = `o presente certificado referente à conclusão parcial do curso de ${limparNome(obj.curso)}, compreendendo exclusivamente as disciplinas concluídas no período de ${d1.split('-').reverse().join('/')} a ${df}, com carga horária total de ${totalChCalculado} horas.`;
+        document.getElementById("blocoTotaisVerso").innerHTML = `<tr><td class="label-total">Carga Horária Total</td><td class="valor-total" id="vCH"></td></tr>`;
+        document.getElementById("vCH").innerText = totalChCalculado;
+        document.getElementById("txtCriterios").innerHTML = `O presente certificado refere-se às disciplinas efetivamente cursadas e concluídas pelo(a) aluno(a), conforme histórico acadêmico da instituição. A certificação foi emitida em decorrência da opção formal do(a) aluno(a)/responsável legal pela desistência das disciplinas remanescentes, razão pela qual não se aplicam os critérios de avaliação e aprovação previstos para a conclusão integral do curso.`;
+      } else {
+        document.getElementById("blocoDetalhesFrente").innerHTML = `a certificação de Qualificação Profissional em ${limparNome(obj.curso)}, por ter concluído com maestria este curso, ocorrido no período de ${d1.split('-').reverse().join('/')} à ${df}, totalizando ${obj.cargaHorariaTotal} horas de carga horária, obtendo média geral do curso de ${obj.mediaGeral} pontos.`;
+        document.getElementById("blocoTotaisVerso").innerHTML = `<tr><td class="label-total">Carga Horária Total</td><td class="valor-total" id="vCH"></td></tr><tr><td class="label-total">Média Geral do Curso</td><td class="valor-total" id="vMedia"></td></tr>`;
+        document.getElementById("vCH").innerText = obj.cargaHorariaTotal;
+        document.getElementById("vMedia").innerText = obj.mediaGeral;
+        document.getElementById("txtCriterios").innerHTML = `Sistema de Avaliação e Critérios de Aprovação:<br>Frequência mínima obrigatória: 80% (oitenta por cento)<br>Média mínima para aprovação por disciplina/módulo: <span id="txtCorteDisc">6,0 (seis)</span><br>Média geral mínima para conclusão do curso: <span id="txtCorteGeral">6,0 (seis)</span><br>A média final por disciplina é obtida por meio do seguinte cálculo de avaliação:<br>A.T./P. × 0,4 + A.D. × 0,2 + A.S. × 0,2 + P.P. × 0,2 = Média Final`;
+        
+        let corte = (parseInt(obj.matricula) < 1000) ? "5,0 (cinco)" : "6,0 (seis)";
+        document.getElementById("txtCorteDisc").innerText = corte;
+        document.getElementById("txtCorteGeral").innerText = corte;
+      }
+    }
+
+    async function carregarHistorico() {
+      let c = document.getElementById("corpoHistorico");
+      c.innerHTML = `<tr><td colspan="6" class="text-muted py-3"><i class="fas fa-spinner fa-spin"></i> Carregando...</td></tr>`;
+      
+      let res = await chamarAPI({ acao: "historico" });
+
+      if(res.sucesso && res.dados.length > 0) {
+        historicoData = res.dados;
+        let h = "";
+        res.dados.forEach((l, i) => {
+          let tipoSalvo = l[11] || "Conclusão Normal"; 
+          let badgeTipo = tipoSalvo.includes("Normal") ? "badge-status-ok" : "badge-status-bad";
+
+          h += `<tr>
+            <td class="small text-muted">${l[0]}</td>
+            <td class="fw-bold text-dark">${l[3]}</td>
+            <td><span class="badge ${badgeTipo} py-1 px-2 rounded-pill shadow-sm">${tipoSalvo}</span></td>
+            <td class="text-muted">${l[5]}</td>
+            <td class="text-muted">${l[6]}</td>
+            <td>
+              <div class="btn-group shadow-sm rounded">
+                <button class="btn btn-sm btn-light border text-primary" title="Reimprimir PDF" onclick="reimprimir(${i})"><i class="fas fa-file-pdf"></i></button>
+                <button class="btn btn-sm btn-light border text-warning" title="Editar Parâmetros" onclick="editarHist(${i})"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-sm btn-light border text-danger" title="Excluir Registro" onclick="excluirHist('${l[0]}')"><i class="fas fa-trash"></i></button>
+              </div>
+            </td>
+          </tr>`;
+        });
+        c.innerHTML = h;
+      } else { c.innerHTML = `<tr><td colspan="6" class="text-muted py-3">Nenhum certificado emitido ainda.</td></tr>`; }
+    }
+
+    async function reimprimir(i) {
+      let l = historicoData[i];
+      let res = await chamarAPI({ acao: "buscar", matricula: l[2] });
+
+      if(res.sucesso) {
+        let locCompleto = l[10];
+        let dRegCalculada = new Date().toISOString().split('T')[0]; 
+        let tipoNaReimpressao = (l[11] && l[11].includes("Desistência")) ? 'desistencia' : 'normal';
+
+        prepararImpressao(l[8], l[9], dRegCalculada, l[5], l[6], locCompleto, res.dados, tipoNaReimpressao);
+        
+        let extract = locCompleto.replace('Aracaju, ', '').replace('.', '');
+        document.getElementById("vDataRegistro").innerText = extract;
+        
+        window.print();
+      }
+    }
+
+    function editarHist(i) {
+      let l = historicoData[i];
+      let tipoEdicao = (l[11] && l[11].includes("Desistência")) ? 'desistencia' : 'normal';
+      
+      iniciarModo(tipoEdicao);
+
+      document.getElementById("mat").value = l[2];
+      document.getElementById("dataIni").value = l[8];
+      document.getElementById("dataFim").value = l[9];
+      document.getElementById("livroFl").value = l[5];
+      document.getElementById("registroNum").value = l[6];
+      trocarAba('emitir');
+      buscar();
+    }
+
+    async function excluirHist(id) {
+      let senha = prompt("Acesso Restrito: Digite a senha do administrador para deletar o registro:");
+      if(senha === "1312892099") {
+        let res = await chamarAPI({ acao: "excluir", id: id });
+        if(res.sucesso) carregarHistorico();
+        else alert("Erro ao deletar do banco.");
+      } else if(senha !== null) { alert("Senha incorreta."); }
+    }
+  </script>
+</body>
+</html>
