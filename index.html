@@ -132,14 +132,15 @@
 
     #printArea { display: none; }
     
-    /* ======== ESTILOS DO CERTIFICADO IMPRESSO (INTACTO) ======== */
+    /* ======== ESTILOS DO CERTIFICADO IMPRESSO (INTACTO E OTIMIZADO) ======== */
     @media print {
       @page { size: A4 landscape; margin: 0; }
       body { padding: 0; margin: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       #interfaceUI { display: none !important; }
       #printArea { display: block !important; }
       
-      .pagina-cert { width: 297mm; height: 210mm; page-break-after: always; position: relative; box-sizing: border-box; }
+      /* Reduzido 2mm para impedir que o GitHub crie a segunda página */
+      .pagina-cert { width: 297mm; height: 208mm; page-break-after: always; position: relative; box-sizing: border-box; }
       .frente-bg { background: url('https://i.postimg.cc/VNwGwdCP/Frente.jpg') no-repeat center; background-size: 297mm 210mm; } 
       .verso-bg { background: url('https://i.postimg.cc/2ygGK6YS/Fundo.jpg') no-repeat center; background-size: 297mm 210mm; }
 
@@ -149,22 +150,27 @@
       .cert-detalhes { font-family: 'Jost', sans-serif; font-size: 15pt; color: #1a1a1a; font-weight: 400 !important; line-height: 1.5; padding: 0 40mm; text-align: center; }
       .assinatura-aluno { position: absolute; bottom: 16mm; right: 55mm; text-align: center; font-family: 'Jost', sans-serif; font-size: 12pt; font-weight: 400 !important; color: #1a1a1a; }
 
-      .verso-container { padding: 15mm 20mm 6mm 20mm; font-family: 'Jost', sans-serif; font-weight: 400 !important; color: #1a1a1a; display: flex; flex-direction: column; height: 210mm; box-sizing: border-box; }
-      .tabela-notes { width: 100%; table-layout: fixed; border-collapse: collapse; margin-top: 5mm; font-size: 10pt; background: transparent !important; }
-      .tabela-notas th, .tabela-notas td { border: 0.5pt solid #1a1a1a; padding: 2px 5px; text-align: center; font-weight: 400 !important; background: transparent !important; }
+      /* Reduzido 2mm aqui também */
+      .verso-container { padding: 15mm 20mm 6mm 20mm; font-family: 'Jost', sans-serif; font-weight: 400 !important; color: #1a1a1a; display: flex; flex-direction: column; height: 208mm; box-sizing: border-box; }
+      
+      .tabela-notas { width: 100%; table-layout: fixed; border-collapse: collapse; margin-top: 5mm; font-size: 10pt; background: transparent !important; }
+      /* Padding da linha levemente comprimido para segurar cursos grandes */
+      .tabela-notas th, .tabela-notas td { border: 0.5pt solid #1a1a1a; padding: 1.5px 5px !important; text-align: center; font-weight: 400 !important; background: transparent !important; }
       .text-left { text-align: left !important; padding-left: 10px !important; }
 
       /* Cabeçalho centralizado conforme solicitado */
       .tabela-notas thead th:first-child { text-align: center !important; padding-left: 0 !important; }
       .tabela-notas th:nth-child(1) { width: 34%; } .tabela-notas th:nth-child(2) { width: 11%; } .tabela-notas th:nth-child(3) { width: 11%; } .tabela-notas th:nth-child(4) { width: 11%; } .tabela-notas th:nth-child(5) { width: 11%; } .tabela-notas th:nth-child(6) { width: 11%; } .tabela-notas th:nth-child(7) { width: 11%; } 
 
-      .rodape-footer { margin-top: auto; width: 100%; padding-top: 15mm !important; }
+      /* Padding reduzido para que a "Conclusão Normal" tenha o mesmo respiro sem quebrar página */
+      .rodape-footer { margin-top: auto; width: 100%; padding-top: 5mm !important; }
       .tabela-totais { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 10.5pt; margin-bottom: 4mm; background: transparent !important; }
       .tabela-totais td { padding: 4px 5px; font-weight: 400 !important; background: transparent !important; border: 0.5pt solid #1a1a1a !important; }
       .label-total { text-align: left !important; padding-left: 10px !important; width: 89%; }
       .valor-total { text-align: center !important; width: 11%; }
 
-      .bloco-legal-1, .bloco-legal-2 { font-size: 8.5pt; line-height: 1.4; font-weight: 400 !important; }
+      /* Ajuste no line-height de 1.4 para 1.2, compactando o texto grande */
+      .bloco-legal-1, .bloco-legal-2 { font-size: 8.5pt; line-height: 1.2; font-weight: 400 !important; }
       .bloco-legal-1 { margin-bottom: 2mm; } 
       .rodape-verso-flex { display: flex; justify-content: space-between; font-size: 8.5pt; font-weight: 400 !important; }
       .col-esquerda { width: 55%; } .col-direita { width: 42%; padding-left: 10mm; }
@@ -288,7 +294,7 @@
         <div class="table-responsive bg-white p-2 rounded border shadow-sm" style="max-height: 500px;">
           <table class="table table-ui table-hover text-center align-middle mb-0">
             <thead>
-              <tr><th>Data Sist.</th><th>Aluno</th><th>Tipo</th><th>FL</th><th>Nº Reg.</th><th>Ações</th></tr>
+              <tr><th>Data Sist.</th><th>Emissor</th><th>Aluno</th><th>Tipo</th><th>FL</th><th>Nº Reg.</th><th>Ações</th></tr>
             </thead>
             <tbody id="corpoHistorico"></tbody>
           </table>
@@ -374,7 +380,6 @@
       document.getElementById("dataReg").value = new Date().toISOString().split('T')[0];
     });
 
-    // Motor Central de Comunicação Remota entre GitHub e Google Sheets
     async function chamarAPI(payload) {
       try {
         let response = await fetch(API_URL, {
@@ -589,7 +594,8 @@
 
     async function carregarHistorico() {
       let c = document.getElementById("corpoHistorico");
-      c.innerHTML = `<tr><td colspan="6" class="text-muted py-3"><i class="fas fa-spinner fa-spin"></i> Carregando...</td></tr>`;
+      // Ajustado o colspan de 6 para 7 por conta do Emissor
+      c.innerHTML = `<tr><td colspan="7" class="text-muted py-3"><i class="fas fa-spinner fa-spin"></i> Carregando...</td></tr>`;
       
       let res = await chamarAPI({ acao: "historico" });
 
@@ -602,7 +608,7 @@
 
           h += `<tr>
             <td class="small text-muted">${l[0]}</td>
-            <td class="fw-bold text-dark">${l[3]}</td>
+            <td class="small text-muted">${l[1]}</td> <td class="fw-bold text-dark">${l[3]}</td>
             <td><span class="badge ${badgeTipo} py-1 px-2 rounded-pill shadow-sm">${tipoSalvo}</span></td>
             <td class="text-muted">${l[5]}</td>
             <td class="text-muted">${l[6]}</td>
@@ -616,7 +622,7 @@
           </tr>`;
         });
         c.innerHTML = h;
-      } else { c.innerHTML = `<tr><td colspan="6" class="text-muted py-3">Nenhum certificado emitido ainda.</td></tr>`; }
+      } else { c.innerHTML = `<tr><td colspan="7" class="text-muted py-3">Nenhum certificado emitido ainda.</td></tr>`; }
     }
 
     async function reimprimir(i) {
