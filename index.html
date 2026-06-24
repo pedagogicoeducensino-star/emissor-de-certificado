@@ -375,8 +375,12 @@
     let historicoData = [];
     let tipoAtual = 'normal'; 
 
-    window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () => {
       document.getElementById("dataReg").value = new Date().toISOString().split('T')[0];
+      
+      // FORÇA O NAVEGADOR A BAIXAR AS ARTES ANTES DA IMPRESSÃO
+      let imgFrente = new Image(); imgFrente.src = "https://i.postimg.cc/VNwGwdCP/Frente.jpg";
+      let imgVerso = new Image(); imgVerso.src = "https://i.postimg.cc/2ygGK6YS/Fundo.jpg";
     });
 
     async function chamarAPI(payload) {
