@@ -139,10 +139,10 @@
       #interfaceUI { display: none !important; }
       #printArea { display: block !important; }
       
-      /* Reduzido 2mm para impedir que o GitHub crie a segunda página */
-      .pagina-cert { width: 297mm; height: 208mm; page-break-after: always; position: relative; box-sizing: border-box; }
-      .frente-bg { background: url('https://i.postimg.cc/VNwGwdCP/Frente.jpg') no-repeat center; background-size: 297mm 210mm; } 
-      .verso-bg { background: url('https://i.postimg.cc/2ygGK6YS/Fundo.jpg') no-repeat center; background-size: 297mm 210mm; }
+      /* === CORREÇÃO DA MARGEM BRANCA E ALTURA === */
+      .pagina-cert { width: 297mm; height: 210mm; page-break-after: always; position: relative; box-sizing: border-box; overflow: hidden; }
+      .frente-bg { background: url('https://i.postimg.cc/VNwGwdCP/Frente.jpg') no-repeat center; background-size: 100% 100%; } 
+      .verso-bg { background: url('https://i.postimg.cc/2ygGK6YS/Fundo.jpg') no-repeat center; background-size: 100% 100%; }
 
       .cert-area-frente { position: absolute; top: 0; left: 0; width: 100%; padding-top: 105mm; text-align: center; }
       .cert-texto-top { font-family: 'Jost', sans-serif; font-size: 16pt; font-weight: 400 !important; color: #1a1a1a; margin-bottom: 8mm; }
@@ -150,8 +150,7 @@
       .cert-detalhes { font-family: 'Jost', sans-serif; font-size: 15pt; color: #1a1a1a; font-weight: 400 !important; line-height: 1.5; padding: 0 40mm; text-align: center; }
       .assinatura-aluno { position: absolute; bottom: 16mm; right: 55mm; text-align: center; font-family: 'Jost', sans-serif; font-size: 12pt; font-weight: 400 !important; color: #1a1a1a; }
 
-      /* Reduzido 2mm aqui também */
-      .verso-container { padding: 15mm 20mm 6mm 20mm; font-family: 'Jost', sans-serif; font-weight: 400 !important; color: #1a1a1a; display: flex; flex-direction: column; height: 208mm; box-sizing: border-box; }
+      .verso-container { padding: 15mm 20mm 6mm 20mm; font-family: 'Jost', sans-serif; font-weight: 400 !important; color: #1a1a1a; display: flex; flex-direction: column; height: 210mm; box-sizing: border-box; overflow: hidden; }
       
       .tabela-notas { width: 100%; table-layout: fixed; border-collapse: collapse; margin-top: 5mm; font-size: 10pt; background: transparent !important; }
       /* Padding da linha levemente comprimido para segurar cursos grandes */
