@@ -176,6 +176,32 @@
       .tabela-alinhamento-data { width: 100%; border: none; padding: 0; margin: 0; font-size: 8.5pt; }
       .tabela-alinhamento-data td { border: none !important; padding: 0 !important; text-align: left; }
       .assinatura-data { text-align: right; margin-top: 6mm; font-size: 9.5pt; font-weight: 400 !important; }
+      /* ======== MODO PRÉ-IMPRESSO (NOVO LAYOUT SEM FUNDO) ======== */
+    body.modo-pre-impresso .frente-bg,
+    body.modo-pre-impresso .verso-bg {
+      background: none !important; /* Remove as artes de fundo */
+    }
+    
+    body.modo-pre-impresso .cert-area-frente {
+      padding-top: 45mm !important; /* Desce o texto para alinhar com o espaço */
+      padding-left: 95mm !important; /* Empurra tudo para a direita, fugindo da arte */
+      padding-right: 15mm !important;
+      text-align: right !important; /* Alinha todo o bloco à direita */
+    }
+    
+    body.modo-pre-impresso .cert-texto-top, 
+    body.modo-pre-impresso .cert-nome, 
+    body.modo-pre-impresso .cert-detalhes {
+      text-align: right !important; 
+      padding: 0 !important;
+    }
+
+    body.modo-pre-impresso .cert-nome {
+      font-family: 'Jost', sans-serif !important; /* Tira a fonte cursiva no modelo novo */
+      font-weight: bold !important;
+      color: #1a1a1a !important; /* Texto escuro */
+      font-size: 38pt !important; /* Levemente menor para caber na direita */
+      margin-bottom: 12mm !important; 
     }
   </style>
 </head>
@@ -278,12 +304,18 @@
               </div>
             </div>
 
-            <button class="btn btn-theme-action w-100 fw-bold py-3 fs-5 rounded-3" id="btnEmitir" onclick="salvarEEmitir()">
-              <i class="fas fa-print me-2"></i> GERAR E IMPRIMIR CERTIFICADO
-            </button>
-          </div>
-        </div>
-      </div>
+<div class="row g-2">
+  <div class="col-md-6">
+    <button class="btn btn-theme-action w-100 fw-bold py-3 fs-6 rounded-3" id="btnEmitirCompleto" onclick="salvarEEmitir('completo')">
+      <i class="fas fa-image me-2"></i> GERAR COM ARTE
+    </button>
+  </div>
+  <div class="col-md-6">
+    <button class="btn btn-outline-dark w-100 fw-bold py-3 fs-6 rounded-3" id="btnEmitirPre" onclick="salvarEEmitir('pre-impresso')" style="border-width: 2px;">
+      <i class="fas fa-file-alt me-2"></i> GERAR PRÉ-IMPRESSO (SEM FUNDO)
+    </button>
+  </div>
+</div>
 
       <div id="conteudoHistorico" class="oculto">
         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -502,13 +534,17 @@ window.addEventListener('DOMContentLoaded', () => {
       } else { alert(res.msg); }
     }
 
-    async function salvarEEmitir() {
+    async function salvarEEmitir(modoLayout) {
       let d1 = document.getElementById("dataIni").value; let d2 = document.getElementById("dataFim").value;
       let dReg = document.getElementById("dataReg").value;
       let fl = document.getElementById("livroFl").value; let num = document.getElementById("registroNum").value;
       
       if(!d1 || !d2 || !dReg || !fl || !num) return alert("Preencha todos os campos obrigatórios.");
-      let btn = document.getElementById("btnEmitir"); btn.innerHTML = `<i class="fas fa-cog fa-spin me-2"></i> SALVANDO...`; btn.disabled = true;
+      
+      // Descobre qual botão foi clicado
+      let btn = document.getElementById(modoLayout === 'completo' ? "btnEmitirCompleto" : "btnEmitirPre"); 
+      let textoOriginal = btn.innerHTML;
+      btn.innerHTML = `<i class="fas fa-cog fa-spin me-2"></i> SALVANDO...`; btn.disabled = true;
 
       let locAutomated = `Aracaju, ${formatarDataPorExtenso(dReg)}.`;
       let tituloDoTipo = tipoAtual === 'normal' ? "Conclusão Normal" : "Desistência de Disciplina";
@@ -522,16 +558,24 @@ window.addEventListener('DOMContentLoaded', () => {
       let res = await chamarAPI({ acao: "salvar", registro: registro });
 
       if (res.sucesso) {
-        btn.innerHTML = `<i class="fas fa-print me-2"></i> GERAR E IMPRIMIR CERTIFICADO`; btn.disabled = false;
+        btn.innerHTML = textoOriginal; btn.disabled = false;
+        
+        // APLICA O LAYOUT ESCOLHIDO
+        if (modoLayout === 'pre-impresso') {
+          document.body.classList.add('modo-pre-impresso');
+        } else {
+          document.body.classList.remove('modo-pre-impresso');
+        }
         
         prepararImpressao(d1, d2, dReg, fl, num, locAutomated, dadosAtuais, tipoAtual);
         window.print();
         
+        // Remove o modo após imprimir
+        setTimeout(() => { document.body.classList.remove('modo-pre-impresso'); }, 1000);
+        
         setTimeout(() => {
-          document.getElementById("mat").value = "";
-          document.getElementById("dataIni").value = "";
-          document.getElementById("dataFim").value = "";
-          document.getElementById("livroFl").value = "";
+          document.getElementById("mat").value = ""; document.getElementById("dataIni").value = "";
+          document.getElementById("dataFim").value = ""; document.getElementById("livroFl").value = "";
           document.getElementById("registroNum").value = "";
           document.getElementById("dataReg").value = new Date().toISOString().split('T')[0];
           document.getElementById("infoCertificado").classList.add("oculto");
@@ -539,7 +583,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }, 1500);
       } else {
         alert("Erro ao registrar no banco: " + res.msg);
-        btn.innerHTML = `<i class="fas fa-print me-2"></i> GERAR E IMPRIMIR CERTIFICADO`; btn.disabled = false;
+        btn.innerHTML = textoOriginal; btn.disabled = false;
       }
     }
 
@@ -628,7 +672,7 @@ window.addEventListener('DOMContentLoaded', () => {
       } else { c.innerHTML = `<tr><td colspan="7" class="text-muted py-3">Nenhum certificado emitido ainda.</td></tr>`; }
     }
 
-    async function reimprimir(i) {
+async function reimprimir(i) {
       let l = historicoData[i];
       let res = await chamarAPI({ acao: "buscar", matricula: l[2] });
 
@@ -636,6 +680,14 @@ window.addEventListener('DOMContentLoaded', () => {
         let locCompleto = l[10];
         let dRegCalculada = new Date().toISOString().split('T')[0]; 
         let tipoNaReimpressao = (l[11] && l[11].includes("Desistência")) ? 'desistencia' : 'normal';
+        
+        // Pergunta qual modelo quer na reimpressão
+        let querPreImpresso = confirm("Deseja reimprimir no modelo PRÉ-IMPRESSO (sem fundo)? \n\n[OK] = Pré-Impresso \n[Cancelar] = Completo (Com Arte)");
+        if (querPreImpresso) {
+          document.body.classList.add('modo-pre-impresso');
+        } else {
+          document.body.classList.remove('modo-pre-impresso');
+        }
 
         prepararImpressao(l[8], l[9], dRegCalculada, l[5], l[6], locCompleto, res.dados, tipoNaReimpressao);
         
@@ -643,6 +695,8 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById("vDataRegistro").innerText = extract;
         
         window.print();
+        
+        setTimeout(() => { document.body.classList.remove('modo-pre-impresso'); }, 1000);
       }
     }
 
