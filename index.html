@@ -176,32 +176,46 @@
       .tabela-alinhamento-data { width: 100%; border: none; padding: 0; margin: 0; font-size: 8.5pt; }
       .tabela-alinhamento-data td { border: none !important; padding: 0 !important; text-align: left; }
       .assinatura-data { text-align: right; margin-top: 6mm; font-size: 9.5pt; font-weight: 400 !important; }
-      /* ======== MODO PRÉ-IMPRESSO (NOVO LAYOUT SEM FUNDO) ======== */
+/* ======== MODO PRÉ-IMPRESSO (NOVO LAYOUT SEM FUNDO) ======== */
     body.modo-pre-impresso .frente-bg,
     body.modo-pre-impresso .verso-bg {
       background: none !important; /* Remove as artes de fundo */
     }
     
     body.modo-pre-impresso .cert-area-frente {
-      padding-top: 45mm !important; /* Desce o texto para alinhar com o espaço */
-      padding-left: 95mm !important; /* Empurra tudo para a direita, fugindo da arte */
+      display: flex !important;
+      flex-direction: column !important;
+      box-sizing: border-box !important; /* ISSO RESOLVE A TELA EM BRANCO */
+      width: 100% !important;
+      padding-top: 35mm !important; 
+      padding-left: 120mm !important; /* Empurra pra direita da arte laranja */
       padding-right: 15mm !important;
-      text-align: right !important; /* Alinha todo o bloco à direita */
     }
     
-    body.modo-pre-impresso .cert-texto-top, 
-    body.modo-pre-impresso .cert-nome, 
-    body.modo-pre-impresso .cert-detalhes {
-      text-align: right !important; 
-      padding: 0 !important;
+    body.modo-pre-impresso .cert-texto-top {
+      display: none !important; /* Esconde o topo antigo para juntar tudo num parágrafo só */
     }
 
     body.modo-pre-impresso .cert-nome {
-      font-family: 'Jost', sans-serif !important; /* Tira a fonte cursiva no modelo novo */
-      font-weight: bold !important;
-      color: #1a1a1a !important; /* Texto escuro */
-      font-size: 38pt !important; /* Levemente menor para caber na direita */
+      order: 1 !important; /* Joga o nome para o topo */
+      font-family: 'Gy Grotest V3 Wide', 'Arial Black', sans-serif !important;
+      font-weight: 900 !important;
+      color: #3b3a3a !important; /* Texto escuro */
+      font-size: 30pt !important; 
+      text-align: right !important;
+      line-height: 1.1 !important;
       margin-bottom: 12mm !important; 
+      text-transform: uppercase !important;
+    }
+
+    body.modo-pre-impresso .cert-detalhes {
+      order: 2 !important; /* Joga o parágrafo para debaixo do nome */
+      font-family: 'Jost', sans-serif !important;
+      font-size: 14pt !important;
+      text-align: right !important;
+      padding: 0 !important;
+      color: #4a4a4a !important;
+      line-height: 1.6 !important;
     }
   </style>
 </head>
@@ -587,7 +601,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    function prepararImpressao(d1, d2, dReg, fl, num, loc, obj, tipoDaVez) {
+function prepararImpressao(d1, d2, dReg, fl, num, loc, obj, tipoDaVez) {
       document.title = `Certificado de ${obj.nome.toUpperCase()}`;
       let df = d2.split('-').reverse().join('/');
       
@@ -621,13 +635,24 @@ window.addEventListener('DOMContentLoaded', () => {
       });
       document.getElementById("corpoNotasVerso").innerHTML = h;
 
+      // VERIFICA SE É O MODELO NOVO (SEM FUNDO) PARA AJUSTAR O TEXTO
+      let isPre = document.body.classList.contains('modo-pre-impresso');
+
       if (tipoDaVez === 'desistencia') {
         document.getElementById("blocoDetalhesFrente").innerHTML = `o presente certificado referente à conclusão parcial do curso de ${limparNome(obj.curso)}, compreendendo exclusivamente as disciplinas concluídas no período de ${d1.split('-').reverse().join('/')} a ${df}, com carga horária total de ${totalChCalculado} horas.`;
         document.getElementById("blocoTotaisVerso").innerHTML = `<tr><td class="label-total">Carga Horária Total</td><td class="valor-total" id="vCH"></td></tr>`;
         document.getElementById("vCH").innerText = totalChCalculado;
         document.getElementById("txtCriterios").innerHTML = `O presente certificado refere-se às disciplinas efetivamente cursadas e concluídas pelo(a) aluno(a), conforme histórico acadêmico da instituição. A certificação foi emitida em decorrência da opção formal do(a) aluno(a)/responsável legal pela desistência das disciplinas remanescentes, razão pela qual não se aplicam os critérios de avaliação e aprovação previstos para a conclusão integral do curso.`;
       } else {
-        document.getElementById("blocoDetalhesFrente").innerHTML = `a certificação de Qualificação Profissional em ${limparNome(obj.curso)}, por ter concluído com maestria este curso, ocorrido no período de ${d1.split('-').reverse().join('/')} à ${df}, totalizando ${obj.cargaHorariaTotal} horas de carga horária, obtendo média geral do curso de ${obj.mediaGeral} pontos.`;
+        
+        if (isPre) {
+          // NOVO TEXTO (TUDO JUNTO E CURSO EM NEGRITO)
+          document.getElementById("blocoDetalhesFrente").innerHTML = `A Educ Centro de Ensino Profissionalizante, no uso de suas atribuições, confere a certificação de Qualificação Profissional em <b>${limparNome(obj.curso)}</b>, por ter concluído com maestria este curso, ocorrido no período de ${d1.split('-').reverse().join('/')} a ${df}, totalizando ${obj.cargaHorariaTotal} horas de carga horária, obtendo média geral do curso de ${obj.mediaGeral} pontos.`;
+        } else {
+          // TEXTO ANTIGO (SEPARADO)
+          document.getElementById("blocoDetalhesFrente").innerHTML = `a certificação de Qualificação Profissional em ${limparNome(obj.curso)}, por ter concluído com maestria este curso, ocorrido no período de ${d1.split('-').reverse().join('/')} a ${df}, totalizando ${obj.cargaHorariaTotal} horas de carga horária, obtendo média geral do curso de ${obj.mediaGeral} pontos.`;
+        }
+        
         document.getElementById("blocoTotaisVerso").innerHTML = `<tr><td class="label-total">Carga Horária Total</td><td class="valor-total" id="vCH"></td></tr><tr><td class="label-total">Média Geral do Curso</td><td class="valor-total" id="vMedia"></td></tr>`;
         document.getElementById("vCH").innerText = obj.cargaHorariaTotal;
         document.getElementById("vMedia").innerText = obj.mediaGeral;
