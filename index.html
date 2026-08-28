@@ -132,14 +132,14 @@
 
     #printArea { display: none; }
     
-    /* ======== ESTILOS DO CERTIFICADO IMPRESSO (INTACTO E OTIMIZADO) ======== */
+    /* ======== ESTILOS DO CERTIFICADO IMPRESSO ======== */
     @media print {
       @page { size: A4 landscape; margin: 0; }
       body { padding: 0; margin: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       #interfaceUI { display: none !important; }
       #printArea { display: block !important; }
       
-      /* === CORREÇÃO DA MARGEM BRANCA E ALTURA === */
+      /* === ESTRUTURA BASE (ARTE 1 - ANTIGA) === */
       .pagina-cert { width: 297mm; height: 210mm; page-break-after: always; position: relative; box-sizing: border-box; overflow: hidden; }
       .frente-bg { background: url('https://i.postimg.cc/VNwGwdCP/Frente.jpg') no-repeat center; background-size: 100% 100%; } 
       .verso-bg { background: url('https://i.postimg.cc/2ygGK6YS/Fundo.jpg') no-repeat center; background-size: 100% 100%; }
@@ -153,22 +153,18 @@
       .verso-container { padding: 15mm 20mm 6mm 20mm; font-family: 'Jost', sans-serif; font-weight: 400 !important; color: #1a1a1a; display: flex; flex-direction: column; height: 210mm; box-sizing: border-box; overflow: hidden; }
       
       .tabela-notas { width: 100%; table-layout: fixed; border-collapse: collapse; margin-top: 5mm; font-size: 10pt; background: transparent !important; }
-      /* Padding da linha levemente comprimido para segurar cursos grandes */
       .tabela-notas th, .tabela-notas td { border: 0.5pt solid #1a1a1a; padding: 1.5px 5px !important; text-align: center; font-weight: 400 !important; background: transparent !important; }
       .text-left { text-align: left !important; padding-left: 10px !important; }
 
-      /* Cabeçalho centralizado conforme solicitado */
       .tabela-notas thead th:first-child { text-align: center !important; padding-left: 0 !important; }
       .tabela-notas th:nth-child(1) { width: 34%; } .tabela-notas th:nth-child(2) { width: 11%; } .tabela-notas th:nth-child(3) { width: 11%; } .tabela-notas th:nth-child(4) { width: 11%; } .tabela-notas th:nth-child(5) { width: 11%; } .tabela-notas th:nth-child(6) { width: 11%; } .tabela-notas th:nth-child(7) { width: 11%; } 
 
-      /* Padding reduzido para que a "Conclusão Normal" tenha o mesmo respiro sem quebrar página */
       .rodape-footer { margin-top: auto; width: 100%; padding-top: 5mm !important; }
       .tabela-totais { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 10.5pt; margin-bottom: 4mm; background: transparent !important; }
       .tabela-totais td { padding: 4px 5px; font-weight: 400 !important; background: transparent !important; border: 0.5pt solid #1a1a1a !important; }
       .label-total { text-align: left !important; padding-left: 10px !important; width: 89%; }
       .valor-total { text-align: center !important; width: 11%; }
 
-      /* Ajuste no line-height de 1.4 para 1.2, compactando o texto grande */
       .bloco-legal-1, .bloco-legal-2 { font-size: 8.5pt; line-height: 1.2; font-weight: 400 !important; }
       .bloco-legal-1 { margin-bottom: 2mm; } 
       .rodape-verso-flex { display: flex; justify-content: space-between; font-size: 8.5pt; font-weight: 400 !important; }
@@ -176,46 +172,62 @@
       .tabela-alinhamento-data { width: 100%; border: none; padding: 0; margin: 0; font-size: 8.5pt; }
       .tabela-alinhamento-data td { border: none !important; padding: 0 !important; text-align: left; }
       .assinatura-data { text-align: right; margin-top: 6mm; font-size: 9.5pt; font-weight: 400 !important; }
-/* ======== MODO PRÉ-IMPRESSO (NOVO LAYOUT SEM FUNDO) ======== */
-    body.modo-pre-impresso .frente-bg,
-    body.modo-pre-impresso .verso-bg {
-      background: none !important; /* Remove as artes de fundo */
-    }
-    
-    body.modo-pre-impresso .cert-area-frente {
-      display: flex !important;
-      flex-direction: column !important;
-      box-sizing: border-box !important; /* ISSO RESOLVE A TELA EM BRANCO */
-      width: 100% !important;
-      padding-top: 35mm !important; 
-      padding-left: 120mm !important; /* Empurra pra direita da arte laranja */
-      padding-right: 15mm !important;
-    }
-    
-    body.modo-pre-impresso .cert-texto-top {
-      display: none !important; /* Esconde o topo antigo para juntar tudo num parágrafo só */
-    }
 
-    body.modo-pre-impresso .cert-nome {
-      order: 1 !important; /* Joga o nome para o topo */
-      font-family: 'Gy Grotest V3 Wide', 'Arial Black', sans-serif !important;
-      font-weight: 900 !important;
-      color: #3b3a3a !important; /* Texto escuro */
-      font-size: 30pt !important; 
-      text-align: right !important;
-      line-height: 1.1 !important;
-      margin-bottom: 12mm !important; 
-      text-transform: uppercase !important;
-    }
 
-    body.modo-pre-impresso .cert-detalhes {
-      order: 2 !important; /* Joga o parágrafo para debaixo do nome */
-      font-family: 'Jost', sans-serif !important;
-      font-size: 14pt !important;
-      text-align: right !important;
-      padding: 0 !important;
-      color: #4a4a4a !important;
-      line-height: 1.6 !important;
+      /* =======================================================
+         ARTE 2 - NOVO LAYOUT (APLICADO QUANDO CLICA NO BOTAO 2)
+         ======================================================= */
+      body.layout-novo .frente-bg { 
+        /* COLE O LINK DA IMAGEM DA ARTE NOVA AQUI EMBAIXO: */
+        background: url('https://i.postimg.cc/xd4R8VVj/Certificado-Frente.jpg') no-repeat center !important; 
+        background-size: 100% 100% !important; 
+      }
+      
+      body.layout-novo .cert-area-frente {
+        display: flex !important;
+        flex-direction: column !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+        padding-top: 35mm !important; 
+        padding-left: 120mm !important; /* Margem esquerda para fugir da arte */
+        padding-right: 15mm !important;
+        text-align: right !important;
+      }
+      
+      body.layout-novo .cert-texto-top {
+        display: none !important; /* Esconde a linha de cima, pois vai juntar tudo embaixo */
+      }
+
+      body.layout-novo .cert-nome {
+        order: 1 !important; 
+        font-family: 'Gy Grotest V3 Wide', 'Arial Black', sans-serif !important; /* Fonte Nova */
+        font-weight: 900 !important;
+        color: #3b3a3a !important; 
+        font-size: 30pt !important; 
+        text-align: right !important;
+        line-height: 1.1 !important;
+        margin-bottom: 12mm !important; 
+        text-transform: uppercase !important;
+      }
+
+      body.layout-novo .cert-detalhes {
+        order: 2 !important; 
+        font-family: 'Jost', sans-serif !important;
+        font-size: 14pt !important;
+        text-align: right !important;
+        padding: 0 !important;
+        color: #4a4a4a !important;
+        line-height: 1.6 !important;
+      }
+
+
+      /* =======================================================
+         ARTE 3 - PRÉ-IMPRESSO (SEM FUNDO) (BOTAO 3)
+         ======================================================= */
+      body.layout-novo.sem-fundo .frente-bg,
+      body.layout-novo.sem-fundo .verso-bg {
+        background: none !important; /* Remove totalmente as imagens */
+      }
     }
   </style>
 </head>
@@ -318,18 +330,29 @@
               </div>
             </div>
 
-<div class="row g-2">
-  <div class="col-md-6">
-    <button class="btn btn-theme-action w-100 fw-bold py-3 fs-6 rounded-3" id="btnEmitirCompleto" onclick="salvarEEmitir('completo')">
-      <i class="fas fa-image me-2"></i> GERAR COM ARTE
-    </button>
-  </div>
-  <div class="col-md-6">
-    <button class="btn btn-outline-dark w-100 fw-bold py-3 fs-6 rounded-3" id="btnEmitirPre" onclick="salvarEEmitir('pre-impresso')" style="border-width: 2px;">
-      <i class="fas fa-file-alt me-2"></i> GERAR PRÉ-IMPRESSO (SEM FUNDO)
-    </button>
-  </div>
-</div>
+            <!-- OS 3 BOTÕES DE IMPRESSÃO ESTÃO AQUI -->
+            <div class="row g-2 mt-4 bg-light p-3 rounded border">
+              <div class="col-12 text-center mb-2"><span class="fw-bold text-dark small"><i class="fas fa-print me-1"></i> OPÇÕES DE IMPRESSÃO DO CERTIFICADO:</span></div>
+              <div class="col-md-4">
+                <button class="btn btn-outline-secondary w-100 fw-bold py-3" id="btnEmitir1" onclick="salvarEEmitir('antigo')">
+                  <i class="fas fa-history me-1"></i> 1. ARTE ANTIGA
+                </button>
+              </div>
+              <div class="col-md-4">
+                <button class="btn btn-theme-primary w-100 fw-bold py-3" id="btnEmitir2" onclick="salvarEEmitir('novo-com-fundo')">
+                  <i class="fas fa-image me-1"></i> 2. ARTE NOVA (FUNDO)
+                </button>
+              </div>
+              <div class="col-md-4">
+                <button class="btn btn-outline-dark border-2 w-100 fw-bold py-3" id="btnEmitir3" onclick="salvarEEmitir('novo-sem-fundo')">
+                  <i class="fas fa-file-alt me-1"></i> 3. PRÉ-IMPRESSO (S/ FUNDO)
+                </button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
 
       <div id="conteudoHistorico" class="oculto">
         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -421,7 +444,7 @@
     let historicoData = [];
     let tipoAtual = 'normal'; 
 
-window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', () => {
       document.getElementById("dataReg").value = new Date().toISOString().split('T')[0];
       
       // FORÇA O NAVEGADOR A BAIXAR AS ARTES ANTES DA IMPRESSÃO
@@ -548,17 +571,22 @@ window.addEventListener('DOMContentLoaded', () => {
       } else { alert(res.msg); }
     }
 
-    async function salvarEEmitir(modoLayout) {
+    async function salvarEEmitir(modeloEscolhido) {
       let d1 = document.getElementById("dataIni").value; let d2 = document.getElementById("dataFim").value;
       let dReg = document.getElementById("dataReg").value;
       let fl = document.getElementById("livroFl").value; let num = document.getElementById("registroNum").value;
       
       if(!d1 || !d2 || !dReg || !fl || !num) return alert("Preencha todos os campos obrigatórios.");
       
-      // Descobre qual botão foi clicado
-      let btn = document.getElementById(modoLayout === 'completo' ? "btnEmitirCompleto" : "btnEmitirPre"); 
-      let textoOriginal = btn.innerHTML;
-      btn.innerHTML = `<i class="fas fa-cog fa-spin me-2"></i> SALVANDO...`; btn.disabled = true;
+      // Gerencia o botão que foi clicado
+      let btnId = modeloEscolhido === 'antigo' ? 'btnEmitir1' : (modeloEscolhido === 'novo-com-fundo' ? 'btnEmitir2' : 'btnEmitir3');
+      let btn = document.getElementById(btnId); 
+      let originalText = btn.innerHTML;
+      
+      document.getElementById('btnEmitir1').disabled = true;
+      document.getElementById('btnEmitir2').disabled = true;
+      document.getElementById('btnEmitir3').disabled = true;
+      btn.innerHTML = `<i class="fas fa-cog fa-spin me-2"></i> AGUARDE...`;
 
       let locAutomated = `Aracaju, ${formatarDataPorExtenso(dReg)}.`;
       let tituloDoTipo = tipoAtual === 'normal' ? "Conclusão Normal" : "Desistência de Disciplina";
@@ -572,24 +600,30 @@ window.addEventListener('DOMContentLoaded', () => {
       let res = await chamarAPI({ acao: "salvar", registro: registro });
 
       if (res.sucesso) {
-        btn.innerHTML = textoOriginal; btn.disabled = false;
+        document.getElementById('btnEmitir1').disabled = false;
+        document.getElementById('btnEmitir2').disabled = false;
+        document.getElementById('btnEmitir3').disabled = false;
+        btn.innerHTML = originalText;
         
-        // APLICA O LAYOUT ESCOLHIDO
-        if (modoLayout === 'pre-impresso') {
-          document.body.classList.add('modo-pre-impresso');
-        } else {
-          document.body.classList.remove('modo-pre-impresso');
+        // APLICA O LAYOUT (A "CAPA" DO CSS)
+        document.body.classList.remove('layout-novo', 'sem-fundo');
+        if (modeloEscolhido === 'novo-com-fundo') {
+          document.body.classList.add('layout-novo');
+        } else if (modeloEscolhido === 'novo-sem-fundo') {
+          document.body.classList.add('layout-novo', 'sem-fundo');
         }
         
         prepararImpressao(d1, d2, dReg, fl, num, locAutomated, dadosAtuais, tipoAtual);
         window.print();
         
-        // Remove o modo após imprimir
-        setTimeout(() => { document.body.classList.remove('modo-pre-impresso'); }, 1000);
+        // Limpa a formatação após imprimir
+        setTimeout(() => { document.body.classList.remove('layout-novo', 'sem-fundo'); }, 1000);
         
         setTimeout(() => {
-          document.getElementById("mat").value = ""; document.getElementById("dataIni").value = "";
-          document.getElementById("dataFim").value = ""; document.getElementById("livroFl").value = "";
+          document.getElementById("mat").value = "";
+          document.getElementById("dataIni").value = "";
+          document.getElementById("dataFim").value = "";
+          document.getElementById("livroFl").value = "";
           document.getElementById("registroNum").value = "";
           document.getElementById("dataReg").value = new Date().toISOString().split('T')[0];
           document.getElementById("infoCertificado").classList.add("oculto");
@@ -597,11 +631,14 @@ window.addEventListener('DOMContentLoaded', () => {
         }, 1500);
       } else {
         alert("Erro ao registrar no banco: " + res.msg);
-        btn.innerHTML = textoOriginal; btn.disabled = false;
+        document.getElementById('btnEmitir1').disabled = false;
+        document.getElementById('btnEmitir2').disabled = false;
+        document.getElementById('btnEmitir3').disabled = false;
+        btn.innerHTML = originalText;
       }
     }
 
-function prepararImpressao(d1, d2, dReg, fl, num, loc, obj, tipoDaVez) {
+    function prepararImpressao(d1, d2, dReg, fl, num, loc, obj, tipoDaVez) {
       document.title = `Certificado de ${obj.nome.toUpperCase()}`;
       let df = d2.split('-').reverse().join('/');
       
@@ -635,8 +672,8 @@ function prepararImpressao(d1, d2, dReg, fl, num, loc, obj, tipoDaVez) {
       });
       document.getElementById("corpoNotasVerso").innerHTML = h;
 
-      // VERIFICA SE É O MODELO NOVO (SEM FUNDO) PARA AJUSTAR O TEXTO
-      let isPre = document.body.classList.contains('modo-pre-impresso');
+      // CHECA SE ESTAMOS USANDO A ARTE NOVA PARA DEFINIR COMO O TEXTO SERÁ EXIBIDO
+      let usandoNovoLayout = document.body.classList.contains('layout-novo');
 
       if (tipoDaVez === 'desistencia') {
         document.getElementById("blocoDetalhesFrente").innerHTML = `o presente certificado referente à conclusão parcial do curso de ${limparNome(obj.curso)}, compreendendo exclusivamente as disciplinas concluídas no período de ${d1.split('-').reverse().join('/')} a ${df}, com carga horária total de ${totalChCalculado} horas.`;
@@ -645,14 +682,14 @@ function prepararImpressao(d1, d2, dReg, fl, num, loc, obj, tipoDaVez) {
         document.getElementById("txtCriterios").innerHTML = `O presente certificado refere-se às disciplinas efetivamente cursadas e concluídas pelo(a) aluno(a), conforme histórico acadêmico da instituição. A certificação foi emitida em decorrência da opção formal do(a) aluno(a)/responsável legal pela desistência das disciplinas remanescentes, razão pela qual não se aplicam os critérios de avaliação e aprovação previstos para a conclusão integral do curso.`;
       } else {
         
-        if (isPre) {
-          // NOVO TEXTO (TUDO JUNTO E CURSO EM NEGRITO)
+        if (usandoNovoLayout) {
+          // TEXTO ARTE NOVA: Junta a frase de cima ("A Educ...") e coloca o curso em negrito
           document.getElementById("blocoDetalhesFrente").innerHTML = `A Educ Centro de Ensino Profissionalizante, no uso de suas atribuições, confere a certificação de Qualificação Profissional em <b>${limparNome(obj.curso)}</b>, por ter concluído com maestria este curso, ocorrido no período de ${d1.split('-').reverse().join('/')} a ${df}, totalizando ${obj.cargaHorariaTotal} horas de carga horária, obtendo média geral do curso de ${obj.mediaGeral} pontos.`;
         } else {
-          // TEXTO ANTIGO (SEPARADO)
+          // TEXTO ARTE ANTIGA: Deixa separado igual no original
           document.getElementById("blocoDetalhesFrente").innerHTML = `a certificação de Qualificação Profissional em ${limparNome(obj.curso)}, por ter concluído com maestria este curso, ocorrido no período de ${d1.split('-').reverse().join('/')} a ${df}, totalizando ${obj.cargaHorariaTotal} horas de carga horária, obtendo média geral do curso de ${obj.mediaGeral} pontos.`;
         }
-        
+
         document.getElementById("blocoTotaisVerso").innerHTML = `<tr><td class="label-total">Carga Horária Total</td><td class="valor-total" id="vCH"></td></tr><tr><td class="label-total">Média Geral do Curso</td><td class="valor-total" id="vMedia"></td></tr>`;
         document.getElementById("vCH").innerText = obj.cargaHorariaTotal;
         document.getElementById("vMedia").innerText = obj.mediaGeral;
@@ -666,7 +703,6 @@ function prepararImpressao(d1, d2, dReg, fl, num, loc, obj, tipoDaVez) {
 
     async function carregarHistorico() {
       let c = document.getElementById("corpoHistorico");
-      // Ajustado o colspan de 6 para 7 por conta do Emissor
       c.innerHTML = `<tr><td colspan="7" class="text-muted py-3"><i class="fas fa-spinner fa-spin"></i> Carregando...</td></tr>`;
       
       let res = await chamarAPI({ acao: "historico" });
@@ -697,7 +733,7 @@ function prepararImpressao(d1, d2, dReg, fl, num, loc, obj, tipoDaVez) {
       } else { c.innerHTML = `<tr><td colspan="7" class="text-muted py-3">Nenhum certificado emitido ainda.</td></tr>`; }
     }
 
-async function reimprimir(i) {
+    async function reimprimir(i) {
       let l = historicoData[i];
       let res = await chamarAPI({ acao: "buscar", matricula: l[2] });
 
@@ -705,14 +741,17 @@ async function reimprimir(i) {
         let locCompleto = l[10];
         let dRegCalculada = new Date().toISOString().split('T')[0]; 
         let tipoNaReimpressao = (l[11] && l[11].includes("Desistência")) ? 'desistencia' : 'normal';
+
+        // PERGUNTA QUAL MODELO A PESSOA QUER NA HORA DE REIMPRIMIR
+        let layoutDesejado = prompt("QUAL MODELO DESEJA REIMPRIMIR? \nDigite 1 para: ARTE ANTIGA\nDigite 2 para: ARTE NOVA (Com Fundo)\nDigite 3 para: ARTE NOVA (Pré-Impresso/Sem Fundo)", "3");
         
-        // Pergunta qual modelo quer na reimpressão
-        let querPreImpresso = confirm("Deseja reimprimir no modelo PRÉ-IMPRESSO (sem fundo)? \n\n[OK] = Pré-Impresso \n[Cancelar] = Completo (Com Arte)");
-        if (querPreImpresso) {
-          document.body.classList.add('modo-pre-impresso');
-        } else {
-          document.body.classList.remove('modo-pre-impresso');
+        document.body.classList.remove('layout-novo', 'sem-fundo');
+        if (layoutDesejado === "2") {
+            document.body.classList.add('layout-novo');
+        } else if (layoutDesejado === "3") {
+            document.body.classList.add('layout-novo', 'sem-fundo');
         }
+        // Se digitar 1 ou cancelar, o sistema ignora os if acima e imprime a arte antiga (padrão original).
 
         prepararImpressao(l[8], l[9], dRegCalculada, l[5], l[6], locCompleto, res.dados, tipoNaReimpressao);
         
@@ -721,7 +760,7 @@ async function reimprimir(i) {
         
         window.print();
         
-        setTimeout(() => { document.body.classList.remove('modo-pre-impresso'); }, 1000);
+        setTimeout(() => { document.body.classList.remove('layout-novo', 'sem-fundo'); }, 1000);
       }
     }
 
