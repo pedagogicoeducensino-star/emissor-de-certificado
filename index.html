@@ -8,7 +8,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
   <style>
     /* ==========================================
@@ -25,7 +25,6 @@
     
     body { background-color: var(--escola-cinza-claro); font-family: 'Segoe UI', sans-serif; padding: 25px 15px; }
     
-    /* Cartão Principal com leve elevação */
     .card-sistema { 
       max-width: 1250px; 
       margin: auto; 
@@ -38,97 +37,31 @@
     
     .oculto { display: none !important; }
 
-    /* ==========================================
-       BOTÕES 3D (Laranja e Ouro)
-       ========================================== */
-    .btn-theme-primary {
-      background: linear-gradient(145deg, #ff8226, #e65c00);
-      color: #fff !important;
-      border: none;
-      box-shadow: 0 5px 10px rgba(230, 92, 0, 0.3), inset 0 2px 2px rgba(255, 255, 255, 0.3);
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-      transition: all 0.2s ease-in-out;
-    }
-    .btn-theme-primary:hover {
-      background: linear-gradient(145deg, #e65c00, #cc5200);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 15px rgba(230, 92, 0, 0.4), inset 0 2px 2px rgba(255, 255, 255, 0.3);
-    }
-    .btn-theme-primary:active {
-      transform: translateY(1px);
-      box-shadow: inset 0 3px 5px rgba(0,0,0,0.2);
-    }
+    /* BOTOES E BADGES... */
+    .btn-theme-primary { background: linear-gradient(145deg, #ff8226, #e65c00); color: #fff !important; border: none; box-shadow: 0 5px 10px rgba(230, 92, 0, 0.3), inset 0 2px 2px rgba(255, 255, 255, 0.3); transition: all 0.2s ease-in-out; }
+    .btn-theme-primary:hover { background: linear-gradient(145deg, #e65c00, #cc5200); transform: translateY(-2px); box-shadow: 0 8px 15px rgba(230, 92, 0, 0.4), inset 0 2px 2px rgba(255, 255, 255, 0.3); }
+    
+    .btn-theme-outline { background: linear-gradient(145deg, #ffffff, #f0f0f0); color: var(--escola-cinza-escuro) !important; border: 1px solid #dcdcdc; transition: all 0.2s ease-in-out; }
+    .btn-theme-outline:hover { background: #fff; color: var(--escola-laranja) !important; border-color: var(--escola-laranja); transform: translateY(-2px); }
 
-    .btn-theme-outline {
-      background: linear-gradient(145deg, #ffffff, #f0f0f0);
-      color: var(--escola-cinza-escuro) !important;
-      border: 1px solid #dcdcdc;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), inset 0 2px 2px #fff;
-      transition: all 0.2s ease-in-out;
-    }
-    .btn-theme-outline:hover {
-      background: #fff;
-      color: var(--escola-laranja) !important;
-      border-color: var(--escola-laranja);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 15px rgba(255, 107, 0, 0.15), inset 0 2px 2px #fff;
-    }
+    .btn-theme-action { background: linear-gradient(145deg, #ffdf00, #d4af37); color: #1a1a1a !important; border: none; transition: all 0.2s ease-in-out; font-weight: bold; }
+    .btn-theme-action:hover { background: linear-gradient(145deg, #f0c900, #b8962e); transform: translateY(-2px); }
 
-    .btn-theme-action {
-      background: linear-gradient(145deg, #ffdf00, #d4af37);
-      color: #1a1a1a !important;
-      border: none;
-      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.6);
-      text-shadow: 1px 1px 1px rgba(255,255,255,0.5);
-      transition: all 0.2s ease-in-out;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .btn-theme-action:hover {
-      background: linear-gradient(145deg, #f0c900, #b8962e);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5), inset 0 2px 3px rgba(255, 255, 255, 0.5);
-    }
-
-    /* ==========================================
-       ÍCONES 3D E BADGES
-       ========================================== */
-    .icon-3d {
-      color: var(--escola-laranja);
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15), -1px -1px 1px rgba(255, 255, 255, 0.8);
-    }
+    .icon-3d { color: var(--escola-laranja); text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15); }
     .text-theme { color: var(--escola-laranja) !important; }
 
-    .badge-theme-ouro {
-      background: linear-gradient(145deg, #d4af37, #b8962e);
-      color: #fff;
-      box-shadow: 1px 2px 5px rgba(0,0,0,0.2);
-    }
-    .badge-status-ok { background: linear-gradient(145deg, #ff8226, #e65c00); color: #fff; text-shadow: 1px 1px 1px rgba(0,0,0,0.2); box-shadow: 1px 2px 4px rgba(230,92,0,0.3); }
-    .badge-status-bad { background: linear-gradient(145deg, #8a9299, #5c636a); color: #fff; text-shadow: 1px 1px 1px rgba(0,0,0,0.2); box-shadow: 1px 2px 4px rgba(0,0,0,0.2); }
+    .badge-theme-ouro { background: linear-gradient(145deg, #d4af37, #b8962e); color: #fff; }
+    .badge-status-ok { background: linear-gradient(145deg, #ff8226, #e65c00); color: #fff; }
+    .badge-status-bad { background: linear-gradient(145deg, #8a9299, #5c636a); color: #fff; }
 
-    /* ==========================================
-       NAVEGAÇÃO E TABELAS UI
-       ========================================== */
     .nav-tabs .nav-link { color: var(--escola-cinza-escuro); font-weight: 600; cursor: pointer; transition: all 0.3s; }
     .nav-tabs .nav-link:hover { color: var(--escola-laranja); }
-    .nav-tabs .nav-link.active { 
-      color: var(--escola-laranja); 
-      border-bottom: 3px solid var(--escola-laranja); 
-      background: transparent; border-top: none; border-left: none; border-right: none; 
-    }
+    .nav-tabs .nav-link.active { color: var(--escola-laranja); border-bottom: 3px solid var(--escola-laranja); background: transparent; border-top: none; border-left: none; border-right: none; }
     
     .table-ui th { background-color: var(--escola-cinza-claro); color: #444; font-size: 13px; text-transform: uppercase; border-bottom: 2px solid var(--escola-ouro); }
     .table-ui td { font-size: 14px; vertical-align: middle; }
-    .table-ui tbody tr:hover { background-color: var(--escola-creme); }
-
-    /* Caixas de Fundo Creme */
-    .box-creme {
-      background-color: var(--escola-creme);
-      border: 1px solid #e8e3c7;
-      border-left: 4px solid var(--escola-ouro);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-    }
+    
+    .box-creme { background-color: var(--escola-creme); border: 1px solid #e8e3c7; border-left: 4px solid var(--escola-ouro); box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
 
     #printArea { display: none; }
     
@@ -148,7 +81,12 @@
       .cert-texto-top { font-family: 'Jost', sans-serif; font-size: 16pt; font-weight: 400 !important; color: #1a1a1a; margin-bottom: 8mm; }
       .cert-nome { font-family: 'Vladimir Script', 'Great Vibes', cursive; font-size: 52pt; color: #7A242B !important; font-weight: 400 !important; margin-bottom: 8mm; line-height: 1; }
       .cert-detalhes { font-family: 'Jost', sans-serif; font-size: 15pt; color: #1a1a1a; font-weight: 400 !important; line-height: 1.5; padding: 0 40mm; text-align: center; }
+      
+      /* ASSINATURA ANTIGA (SÓ ALUNO) */
       .assinatura-aluno { position: absolute; bottom: 16mm; right: 55mm; text-align: center; font-family: 'Jost', sans-serif; font-size: 12pt; font-weight: 400 !important; color: #1a1a1a; }
+      
+      /* ASSINATURA NOVA (COORDENADOR E ALUNO) - OCULTA NO ANTIGO */
+      .assinaturas-novo { display: none !important; }
 
       .verso-container { padding: 15mm 20mm 6mm 20mm; font-family: 'Jost', sans-serif; font-weight: 400 !important; color: #1a1a1a; display: flex; flex-direction: column; height: 210mm; box-sizing: border-box; overflow: hidden; }
       
@@ -175,10 +113,9 @@
 
 
       /* =======================================================
-         ARTE 2 - NOVO LAYOUT (APLICADO QUANDO CLICA NO BOTAO 2)
+         ARTE 2 - NOVO LAYOUT COM FUNDO
          ======================================================= */
       body.layout-novo .frente-bg { 
-        /* COLE O LINK DA IMAGEM DA ARTE NOVA AQUI EMBAIXO: */
         background: url('https://i.postimg.cc/xd4R8VVj/Certificado-Frente.jpg') no-repeat center !important; 
         background-size: 100% 100% !important; 
       }
@@ -189,21 +126,22 @@
         box-sizing: border-box !important;
         width: 100% !important;
         padding-top: 35mm !important; 
-        padding-left: 120mm !important; /* Margem esquerda para fugir da arte */
+        padding-left: 120mm !important; /* Margem esquerda para fugir da arte laranja */
         padding-right: 15mm !important;
         text-align: right !important;
       }
       
       body.layout-novo .cert-texto-top {
-        display: none !important; /* Esconde a linha de cima, pois vai juntar tudo embaixo */
+        display: none !important; /* Esconde a linha de cima */
       }
 
       body.layout-novo .cert-nome {
         order: 1 !important; 
-        font-family: 'Gy Grotest V3 Wide', 'Arial Black', sans-serif !important; /* Fonte Nova */
+        /* FONTE CORRIGIDA AQUI: Cy Grotesk V3 Wide */
+        font-family: 'Cy Grotesk V3 Wide', 'Cy Grotesk Wide', 'Arial Black', sans-serif !important; 
         font-weight: 900 !important;
         color: #3b3a3a !important; 
-        font-size: 30pt !important; 
+        font-size: 28pt !important; 
         text-align: right !important;
         line-height: 1.1 !important;
         margin-bottom: 12mm !important; 
@@ -219,14 +157,28 @@
         color: #4a4a4a !important;
         line-height: 1.6 !important;
       }
+      
+      /* Oculta a assinatura antiga (só aluno) e exibe a nova (Coordenador + Aluno) */
+      body.layout-novo .assinatura-aluno { display: none !important; }
+      body.layout-novo .assinaturas-novo {
+        display: flex !important;
+        justify-content: space-between !important;
+        position: absolute !important;
+        bottom: 25mm !important; 
+        left: 120mm !important; /* Alinhado com o texto de cima */
+        right: 15mm !important;
+      }
+      body.layout-novo .assinaturas-novo .coord-box { text-align: left !important; font-family: 'Jost', sans-serif !important; font-size: 10pt !important; line-height: 1.2 !important; color: #1a1a1a !important; }
+      body.layout-novo .assinaturas-novo .aluno-box { text-align: right !important; font-family: 'Jost', sans-serif !important; font-size: 10pt !important; line-height: 1.2 !important; color: #1a1a1a !important; }
+      body.layout-novo .assinaturas-novo b { font-size: 11pt !important; text-transform: uppercase !important; font-weight: 700 !important; }
 
 
       /* =======================================================
-         ARTE 3 - PRÉ-IMPRESSO (SEM FUNDO) (BOTAO 3)
+         ARTE 3 - PRÉ-IMPRESSO (SEM FUNDO)
          ======================================================= */
       body.layout-novo.sem-fundo .frente-bg,
       body.layout-novo.sem-fundo .verso-bg {
-        background: none !important; /* Remove totalmente as imagens */
+        background: none !important; 
       }
     }
   </style>
@@ -330,7 +282,6 @@
               </div>
             </div>
 
-            <!-- OS 3 BOTÕES DE IMPRESSÃO ESTÃO AQUI -->
             <div class="row g-2 mt-4 bg-light p-3 rounded border">
               <div class="col-12 text-center mb-2"><span class="fw-bold text-dark small"><i class="fas fa-print me-1"></i> OPÇÕES DE IMPRESSÃO DO CERTIFICADO:</span></div>
               <div class="col-md-4">
@@ -378,9 +329,22 @@
         <div class="cert-nome" id="pNome"></div>
         <div class="cert-detalhes" id="blocoDetalhesFrente"></div>
       </div>
+      
+      <!-- ASSINATURA ARTE ANTIGA -->
       <div class="assinatura-aluno">
         <span id="pNomeAssinatura"></span><br>Aluno(a)
       </div>
+
+      <!-- ASSINATURA ARTE NOVA (COORDENADOR + ALUNO) -->
+      <div class="assinaturas-novo">
+        <div class="coord-box">
+          <b>DAVI DE SANTANA FELÍCIO</b><br>Coordenador Pedagógico
+        </div>
+        <div class="aluno-box">
+          <b id="pNomeAssinaturaNovo"></b><br>Aluno(a)
+        </div>
+      </div>
+
     </div>
 
     <div class="pagina-cert verso-bg verso-container">
@@ -436,7 +400,6 @@
 
   <script>
     // ========================================================
-    // COLOQUE O SEU LINK GERADO PELO GOOGLE APPS SCRIPT AQUI:
     const API_URL = "https://script.google.com/macros/s/AKfycbyLvVXDekPGAsRsITabSz6mSvtGGj1vM38jKAIkXE5n3p-iCvoBgAsBY79mj8K_sbYTIA/exec"; 
     // ========================================================
 
@@ -450,6 +413,7 @@
       // FORÇA O NAVEGADOR A BAIXAR AS ARTES ANTES DA IMPRESSÃO
       let imgFrente = new Image(); imgFrente.src = "https://i.postimg.cc/VNwGwdCP/Frente.jpg";
       let imgVerso = new Image(); imgVerso.src = "https://i.postimg.cc/2ygGK6YS/Fundo.jpg";
+      let imgFrenteNova = new Image(); imgFrenteNova.src = "https://i.postimg.cc/xd4R8VVj/Certificado-Frente.jpg";
     });
 
     async function chamarAPI(payload) {
@@ -578,7 +542,6 @@
       
       if(!d1 || !d2 || !dReg || !fl || !num) return alert("Preencha todos os campos obrigatórios.");
       
-      // Gerencia o botão que foi clicado
       let btnId = modeloEscolhido === 'antigo' ? 'btnEmitir1' : (modeloEscolhido === 'novo-com-fundo' ? 'btnEmitir2' : 'btnEmitir3');
       let btn = document.getElementById(btnId); 
       let originalText = btn.innerHTML;
@@ -605,7 +568,6 @@
         document.getElementById('btnEmitir3').disabled = false;
         btn.innerHTML = originalText;
         
-        // APLICA O LAYOUT (A "CAPA" DO CSS)
         document.body.classList.remove('layout-novo', 'sem-fundo');
         if (modeloEscolhido === 'novo-com-fundo') {
           document.body.classList.add('layout-novo');
@@ -616,19 +578,9 @@
         prepararImpressao(d1, d2, dReg, fl, num, locAutomated, dadosAtuais, tipoAtual);
         window.print();
         
-        // Limpa a formatação após imprimir
+        // Remove a capa de CSS logo após fechar a janela de impressão, sem apagar os dados da tela!
         setTimeout(() => { document.body.classList.remove('layout-novo', 'sem-fundo'); }, 1000);
         
-        setTimeout(() => {
-          document.getElementById("mat").value = "";
-          document.getElementById("dataIni").value = "";
-          document.getElementById("dataFim").value = "";
-          document.getElementById("livroFl").value = "";
-          document.getElementById("registroNum").value = "";
-          document.getElementById("dataReg").value = new Date().toISOString().split('T')[0];
-          document.getElementById("infoCertificado").classList.add("oculto");
-          document.title = "Portal de Certificação | Educ";
-        }, 1500);
       } else {
         alert("Erro ao registrar no banco: " + res.msg);
         document.getElementById('btnEmitir1').disabled = false;
@@ -644,6 +596,7 @@
       
       document.getElementById("pNome").innerText = obj.nome;
       document.getElementById("pNomeAssinatura").innerText = obj.nome;
+      document.getElementById("pNomeAssinaturaNovo").innerText = obj.nome; // Injeta o nome na assinatura da nova arte
       
       document.getElementById("vDataRegistro").innerText = formatarDataPorExtenso(dReg);
       document.getElementById("vFl").innerText = fl;
@@ -672,7 +625,6 @@
       });
       document.getElementById("corpoNotasVerso").innerHTML = h;
 
-      // CHECA SE ESTAMOS USANDO A ARTE NOVA PARA DEFINIR COMO O TEXTO SERÁ EXIBIDO
       let usandoNovoLayout = document.body.classList.contains('layout-novo');
 
       if (tipoDaVez === 'desistencia') {
@@ -683,10 +635,8 @@
       } else {
         
         if (usandoNovoLayout) {
-          // TEXTO ARTE NOVA: Junta a frase de cima ("A Educ...") e coloca o curso em negrito
           document.getElementById("blocoDetalhesFrente").innerHTML = `A Educ Centro de Ensino Profissionalizante, no uso de suas atribuições, confere a certificação de Qualificação Profissional em <b>${limparNome(obj.curso)}</b>, por ter concluído com maestria este curso, ocorrido no período de ${d1.split('-').reverse().join('/')} a ${df}, totalizando ${obj.cargaHorariaTotal} horas de carga horária, obtendo média geral do curso de ${obj.mediaGeral} pontos.`;
         } else {
-          // TEXTO ARTE ANTIGA: Deixa separado igual no original
           document.getElementById("blocoDetalhesFrente").innerHTML = `a certificação de Qualificação Profissional em ${limparNome(obj.curso)}, por ter concluído com maestria este curso, ocorrido no período de ${d1.split('-').reverse().join('/')} a ${df}, totalizando ${obj.cargaHorariaTotal} horas de carga horária, obtendo média geral do curso de ${obj.mediaGeral} pontos.`;
         }
 
@@ -742,7 +692,6 @@
         let dRegCalculada = new Date().toISOString().split('T')[0]; 
         let tipoNaReimpressao = (l[11] && l[11].includes("Desistência")) ? 'desistencia' : 'normal';
 
-        // PERGUNTA QUAL MODELO A PESSOA QUER NA HORA DE REIMPRIMIR
         let layoutDesejado = prompt("QUAL MODELO DESEJA REIMPRIMIR? \nDigite 1 para: ARTE ANTIGA\nDigite 2 para: ARTE NOVA (Com Fundo)\nDigite 3 para: ARTE NOVA (Pré-Impresso/Sem Fundo)", "3");
         
         document.body.classList.remove('layout-novo', 'sem-fundo');
@@ -751,7 +700,6 @@
         } else if (layoutDesejado === "3") {
             document.body.classList.add('layout-novo', 'sem-fundo');
         }
-        // Se digitar 1 ou cancelar, o sistema ignora os if acima e imprime a arte antiga (padrão original).
 
         prepararImpressao(l[8], l[9], dRegCalculada, l[5], l[6], locCompleto, res.dados, tipoNaReimpressao);
         
