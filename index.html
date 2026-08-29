@@ -518,7 +518,10 @@ window.addEventListener('DOMContentLoaded', () => {
       } else { alert("Código de acesso incorreto."); }
     }
 
-    function sair() { location.reload(); }
+function sair() { 
+      sessionStorage.removeItem("logadoEduc"); // APAGA A SESSÃO ANTES DE SAIR
+      location.reload(); 
+    }
 
 async function buscar() {
       let m = document.getElementById("mat").value;
