@@ -116,7 +116,7 @@
          ARTE 2 - NOVO LAYOUT COM FUNDO E SEM FUNDO NO VERSO
          ======================================================= */
       body.layout-novo .frente-bg { 
-        background: url('https://i.postimg.cc/4N1dkjMk/Certificado-Pronto-Prenchido-(2).jpg') no-repeat center !important; 
+        background: url('https://i.postimg.cc/fyTxbCTs/Certificado-Frente.jpg') no-repeat center !important; 
         background-size: 100% 100% !important; 
       }
       
@@ -175,26 +175,36 @@
         line-height: 1.5 !important;
       }
       
-      /* Oculta as assinaturas geradas no html normal */
-      body.layout-novo .assinaturas-novo { display: none !important; } 
+/* OCULTA ASSINATURA ANTIGA (SOMENTE ALUNO) */
+      body.layout-novo .assinatura-aluno { display: none !important; } 
       
-      /* NOME DO ALUNO NA ASSINATURA (SOBREPÕE A ARTE) */
-      body.layout-novo .assinatura-aluno {
-        display: block !important;
+      /* EXIBE A ASSINATURA NOVA (COORDENADOR NA ESQUERDA E ALUNO NA DIREITA) */
+      body.layout-novo .assinaturas-novo {
+        display: flex !important;
+        justify-content: space-between !important; /* Separa os dois para os cantos */
         position: absolute !important;
-        bottom: 37mm !important; /* Subiu de 28mm para 37mm: Assim ele sai de cima da palavra "Aluno(a)" e alinha com o Coordenador */
-        left: 140mm !important; 
-        right: 12mm !important; 
-        text-align: right !important; 
-        font-size: 0 !important; 
-        margin: 0 !important;
-        padding: 0 !important;
+        bottom: 37mm !important; 
+        left: 140mm !important; /* O mesmo limite esquerdo do texto (140mm) */
+        right: 12mm !important; /* O mesmo limite direito do texto (12mm) */
       }
-      body.layout-novo .assinatura-aluno span {
-        font-size: 10pt !important; 
-        font-family: 'Cy Grotesk V3 Wide', 'Cy Grotesk Wide', sans-serif !important; 
-        font-weight: 700 !important;
+      
+      /* CAIXA DO COORDENADOR (TRAVADA À ESQUERDA) */
+      body.layout-novo .assinaturas-novo .coord-box {
+        text-align: left !important;
+        font-family: 'Cy Grotesk V3 Wide', 'Cy Grotesk Wide', sans-serif !important;
+        font-size: 10pt !important;
         color: #1a1a1a !important;
+        line-height: 1.2 !important;
+        text-transform: uppercase !important;
+      }
+
+      /* CAIXA DO ALUNO (TRAVADA À DIREITA) */
+      body.layout-novo .assinaturas-novo .aluno-box {
+        text-align: right !important;
+        font-family: 'Cy Grotesk V3 Wide', 'Cy Grotesk Wide', sans-serif !important;
+        font-size: 10pt !important;
+        color: #1a1a1a !important;
+        line-height: 1.2 !important;
         text-transform: uppercase !important;
       }
 
@@ -213,7 +223,7 @@
   <div style="position: absolute; width: 0; height: 0; overflow: hidden; z-index: -1; opacity: 0;">
       <img src="https://i.postimg.cc/VNwGwdCP/Frente.jpg">
       <img src="https://i.postimg.cc/2ygGK6YS/Fundo.jpg">
-      <img src="https://i.postimg.cc/xd4R8VVj/Certificado-Frente.jpg">
+      <img src="https://i.postimg.cc/fyTxbCTs/Certificado-Frente.jpg">
   </div>
 
   <div id="interfaceUI">
@@ -607,11 +617,9 @@
 
       let res = await chamarAPI({ acao: "salvar", registro: registro });
 
-      if (res.sucesso) {
-        document.getElementById('btnEmitir1').disabled = false;
-        document.getElementById('btnEmitir2').disabled = false;
-        document.getElementById('btnEmitir3').disabled = false;
-        btn.innerHTML = originalText;
+if (res.sucesso) {
+        // MUDANÇA: Mantém o botão em loading com a mensagem de preparação
+        btn.innerHTML = `<i class="fas fa-image fa-spin me-2"></i> PREPARANDO ARTE...`;
         
         document.body.classList.remove('layout-novo', 'sem-fundo');
         if (modeloEscolhido === 'novo-com-fundo') {
@@ -622,11 +630,19 @@
         
         prepararImpressao(d1, d2, dReg, fl, num, locAutomated, dadosAtuais, tipoAtual);
         
-// Mantém a tela sem apagar os dados. O usuário decide quando limpar a matrícula.
+        // Dá 2 segundos reais com a mensagem rodando para o Chrome carregar a imagem
         setTimeout(() => { 
           window.print(); 
-          setTimeout(() => { document.body.classList.remove('layout-novo', 'sem-fundo'); }, 500);
-        }, 1500);
+          
+          // Só depois da impressão fechar, ele devolve a tela ao normal
+          setTimeout(() => { 
+            document.body.classList.remove('layout-novo', 'sem-fundo'); 
+            document.getElementById('btnEmitir1').disabled = false;
+            document.getElementById('btnEmitir2').disabled = false;
+            document.getElementById('btnEmitir3').disabled = false;
+            btn.innerHTML = originalText;
+          }, 500);
+        }, 2000);
         
       } else {
         alert("Erro ao registrar no banco: " + res.msg);
