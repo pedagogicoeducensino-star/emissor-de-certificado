@@ -181,11 +181,11 @@
       /* EXIBE A ASSINATURA NOVA (COORDENADOR NA ESQUERDA E ALUNO NA DIREITA) */
       body.layout-novo .assinaturas-novo {
         display: flex !important;
-        justify-content: space-between !important; /* Separa os dois para os cantos */
+        justify-content: space-between !important; 
         position: absolute !important;
-        bottom: 37mm !important; 
-        left: 140mm !important; /* O mesmo limite esquerdo do texto (140mm) */
-        right: 12mm !important; /* O mesmo limite direito do texto (12mm) */
+        bottom: 27mm !important; /* Desceu 1 centímetro inteiro (de 37mm para 27mm) */
+        left: 140mm !important; 
+        right: 12mm !important; 
       }
       
       /* CAIXA DO COORDENADOR (TRAVADA À ESQUERDA) */
@@ -195,7 +195,7 @@
         font-size: 10pt !important;
         color: #1a1a1a !important;
         line-height: 1.2 !important;
-        text-transform: uppercase !important;
+        /* Tirei o comando de maiúsculo daqui */
       }
 
       /* CAIXA DO ALUNO (TRAVADA À DIREITA) */
@@ -205,6 +205,11 @@
         font-size: 10pt !important;
         color: #1a1a1a !important;
         line-height: 1.2 !important;
+        /* Tirei o comando de maiúsculo daqui */
+      }
+      
+      /* FORÇA APENAS OS NOMES A FICAREM MAIÚSCULOS */
+      body.layout-novo .assinaturas-novo b {
         text-transform: uppercase !important;
       }
 
