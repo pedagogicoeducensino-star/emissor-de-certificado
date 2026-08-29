@@ -148,13 +148,13 @@
       body.layout-novo .cert-nome {
         position: absolute !important;
         top: 25mm !important; 
-        left: 120mm !important; /* Trava o limite esquerdo (não deixa invadir a arte) */
-        right: 12mm !important; /* Trava o limite direito (empurrado mais pra borda) */
+        left: 140mm !important; /* Aumentado de 120 para 140: Cria uma "parede" invisível mais para a direita para não bater na arte */
+        right: 12mm !important; 
         font-family: 'Cy Grotesk V3 Wide', 'Cy Grotesk Wide', sans-serif !important; 
         font-weight: 900 !important;
         color: #3b3a3a !important; 
         font-size: 26pt !important; 
-        text-align: right !important; /* Força tudo a colar na linha da direita */
+        text-align: right !important; 
         line-height: 1.1 !important;
         margin: 0 !important; 
         text-transform: uppercase !important;
@@ -164,11 +164,11 @@
       body.layout-novo .cert-detalhes {
         position: absolute !important;
         top: 85mm !important; 
-        left: 120mm !important; /* Compartilha O MESMO limite esquerdo do nome */
-        right: 12mm !important; /* Compartilha O MESMO limite direito do nome */
+        left: 140mm !important; /* Aumentado para 140mm: Agora o texto do meio NUNCA vai encostar na arte laranja */
+        right: 12mm !important; 
         font-family: 'Cy Grotesk V3 Wide', 'Cy Grotesk Wide', sans-serif !important;
         font-size: 13pt !important;
-        text-align: right !important; /* Força tudo a colar na linha da direita */
+        text-align: right !important; 
         padding: 0 !important;
         margin: 0 !important;
         color: #4a4a4a !important;
@@ -182,10 +182,10 @@
       body.layout-novo .assinatura-aluno {
         display: block !important;
         position: absolute !important;
-        bottom: 28mm !important; 
-        left: 120mm !important; /* Compartilha O MESMO limite esquerdo */
-        right: 12mm !important; /* Compartilha O MESMO limite direito */
-        text-align: right !important; /* TIRAMOS O CENTRO - Agora cola na direita igual os outros */
+        bottom: 37mm !important; /* Subiu de 28mm para 37mm: Assim ele sai de cima da palavra "Aluno(a)" e alinha com o Coordenador */
+        left: 140mm !important; 
+        right: 12mm !important; 
+        text-align: right !important; 
         font-size: 0 !important; 
         margin: 0 !important;
         padding: 0 !important;
@@ -210,7 +210,7 @@
 </head>
 <body>
 <!-- PRELOADER DE IMAGENS PARA CORRIGIR O BUG DA TELA BRANCA NO CHROME -->
-  <div style="display:none;">
+  <div style="position: absolute; width: 0; height: 0; overflow: hidden; z-index: -1; opacity: 0;">
       <img src="https://i.postimg.cc/VNwGwdCP/Frente.jpg">
       <img src="https://i.postimg.cc/2ygGK6YS/Fundo.jpg">
       <img src="https://i.postimg.cc/xd4R8VVj/Certificado-Frente.jpg">
@@ -622,11 +622,11 @@
         
         prepararImpressao(d1, d2, dReg, fl, num, locAutomated, dadosAtuais, tipoAtual);
         
-        // Mantém a tela sem apagar os dados. O usuário decide quando limpar a matrícula.
+// Mantém a tela sem apagar os dados. O usuário decide quando limpar a matrícula.
         setTimeout(() => { 
           window.print(); 
           setTimeout(() => { document.body.classList.remove('layout-novo', 'sem-fundo'); }, 500);
-        }, 500);
+        }, 1500);
         
       } else {
         alert("Erro ao registrar no banco: " + res.msg);
