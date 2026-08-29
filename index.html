@@ -116,61 +116,81 @@
          ARTE 2 - NOVO LAYOUT COM FUNDO E SEM FUNDO NO VERSO
          ======================================================= */
       body.layout-novo .frente-bg { 
-        background: url('https://i.postimg.cc/4N1dkjMk/Certificado-Pronto-Prenchido-(2).jpg') no-repeat center !important; 
+        background: url('https://i.postimg.cc/xd4R8VVj/Certificado-Frente.jpg') no-repeat center !important; 
         background-size: 100% 100% !important; 
       }
       
-      /* Remove a arte do fundo do verso no modelo novo */
       body.layout-novo .verso-bg {
         background: none !important; 
       }
 
-      /* Força a fonte Jost no verso inteiro do modelo novo */
+      /* CORREÇÃO DA FONTE: Aplica Cy Grotesk V3 Wide no verso inteiro para os modelos 2 e 3 */
       body.layout-novo .verso-container,
-      body.layout-novo .tabela-notas th,
-      body.layout-novo .tabela-notas td,
-      body.layout-novo .rodape-verso-flex {
-        font-family: 'Jost', sans-serif !important;
+      body.layout-novo .verso-container * {
+        font-family: 'Cy Grotesk V3 Wide', 'Cy Grotesk Wide', sans-serif !important;
       }
       
       body.layout-novo .cert-area-frente {
         display: flex !important;
         flex-direction: column !important;
-        justify-content: center !important; /* Força o texto a ficar no meio do espaço vertical */
+        justify-content: center !important; 
         box-sizing: border-box !important;
         width: 100% !important;
-        height: 100% !important; /* Essencial para centralizar verticalmente */
+        height: 100% !important; 
         padding-top: 10mm !important; 
-        padding-bottom: 30mm !important; /* Dá espaço para as assinaturas embaixo */
-        padding-left: 120mm !important; /* Segura o texto longe da arte laranja */
+        padding-bottom: 20mm !important; 
+        padding-left: 120mm !important; 
         padding-right: 15mm !important;
       }
       
       body.layout-novo .cert-texto-top { display: none !important; }
 
+      /* NOME DO ALUNO (LIMITE DO QUADRADO PRETO) */
       body.layout-novo .cert-nome {
-        font-family: 'Cy Grotesk V3 Wide', 'Arial Black', sans-serif !important; 
+        position: absolute !important;
+        top: 25mm !important; 
+        right: 15mm !important; 
+        width: 120mm !important; 
+        font-family: 'Cy Grotesk V3 Wide', 'Cy Grotesk Wide', sans-serif !important; 
         font-weight: 900 !important;
         color: #3b3a3a !important; 
-        font-size: 26pt !important; /* Reduzido levemente para evitar sobreposição */
+        font-size: 24pt !important; 
         text-align: right !important;
         line-height: 1.2 !important;
-        margin-bottom: 12mm !important; /* Afasta o parágrafo do nome */
+        margin: 0 !important; 
         text-transform: uppercase !important;
       }
 
       body.layout-novo .cert-detalhes {
-        font-family: 'Jost', sans-serif !important;
-        font-size: 14pt !important;
+        /* FONTE DO PARÁGRAFO CORRIGIDA PARA CY GROTESK TAMBÉM */
+        font-family: 'Cy Grotesk V3 Wide', 'Cy Grotesk Wide', sans-serif !important;
+        font-size: 13pt !important;
         text-align: right !important;
         padding: 0 !important;
         color: #4a4a4a !important;
         line-height: 1.5 !important;
       }
       
-      /* Oculta as assinaturas geradas pelo código (Já que você vai fixar na imagem JPG) */
-      body.layout-novo .assinatura-aluno { display: none !important; }
-      body.layout-novo .assinaturas-novo { display: none !important; }
+      /* Oculta as assinaturas geradas no html normal */
+      body.layout-novo .assinaturas-novo { display: none !important; } 
+      
+      /* NOME DO ALUNO NA ASSINATURA (SOBREPÕE A ARTE) */
+      body.layout-novo .assinatura-aluno {
+        display: block !important;
+        position: absolute !important;
+        bottom: 28mm !important; 
+        right: 25mm !important; 
+        width: 70mm !important; 
+        text-align: center !important;
+        font-size: 0 !important; /* Esconde o texto "Aluno(a)" gerado pelo JS */
+      }
+      body.layout-novo .assinatura-aluno span {
+        font-size: 10pt !important; 
+        font-family: 'Cy Grotesk V3 Wide', 'Cy Grotesk Wide', sans-serif !important; /* Fonte corrigida */
+        font-weight: 700 !important;
+        color: #1a1a1a !important;
+        text-transform: uppercase !important;
+      }
 
       /* =======================================================
          ARTE 3 - PRÉ-IMPRESSO (SEM FUNDO EM NADA)
@@ -183,6 +203,12 @@
   </style>
 </head>
 <body>
+<!-- PRELOADER DE IMAGENS PARA CORRIGIR O BUG DA TELA BRANCA NO CHROME -->
+  <div style="display:none;">
+      <img src="https://i.postimg.cc/VNwGwdCP/Frente.jpg">
+      <img src="https://i.postimg.cc/2ygGK6YS/Fundo.jpg">
+      <img src="https://i.postimg.cc/xd4R8VVj/Certificado-Frente.jpg">
+  </div>
 
   <div id="interfaceUI">
     <div id="telaLogin" class="card-sistema" style="max-width: 400px; margin-top: 10vh;">
