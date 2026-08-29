@@ -432,13 +432,20 @@
     let historicoData = [];
     let tipoAtual = 'normal'; 
 
-    window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () => {
       document.getElementById("dataReg").value = new Date().toISOString().split('T')[0];
       
       // FORÇA O NAVEGADOR A BAIXAR AS ARTES ANTES DA IMPRESSÃO
       let imgFrente = new Image(); imgFrente.src = "https://i.postimg.cc/VNwGwdCP/Frente.jpg";
       let imgVerso = new Image(); imgVerso.src = "https://i.postimg.cc/2ygGK6YS/Fundo.jpg";
       let imgFrenteNova = new Image(); imgFrenteNova.src = "https://i.postimg.cc/xd4R8VVj/Certificado-Frente.jpg";
+
+      // MAGIA: VERIFICA SE JÁ ESTÁ LOGADO APÓS UM F5
+      if(sessionStorage.getItem("logadoEduc") === "true") {
+        document.getElementById("userAtivo").innerText = "Emissor: Davi Felício";
+        document.getElementById("telaLogin").classList.add("oculto");
+        document.getElementById("telaPrincipal").classList.remove("oculto");
+      }
     });
 
     async function chamarAPI(payload) {
