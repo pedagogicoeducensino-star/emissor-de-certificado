@@ -112,69 +112,68 @@
       .assinatura-data { text-align: right; margin-top: 6mm; font-size: 9.5pt; font-weight: 400 !important; }
 
 
-      /* =======================================================
-         ARTE 2 - NOVO LAYOUT COM FUNDO
+/* =======================================================
+         ARTE 2 - NOVO LAYOUT COM FUNDO E SEM FUNDO NO VERSO
          ======================================================= */
       body.layout-novo .frente-bg { 
-        background: url('https://i.postimg.cc/xd4R8VVj/Certificado-Frente.jpg') no-repeat center !important; 
+        background: url('https://i.postimg.cc/4N1dkjMk/Certificado-Pronto-Prenchido-(2).jpg') no-repeat center !important; 
         background-size: 100% 100% !important; 
+      }
+      
+      /* Remove a arte do fundo do verso no modelo novo */
+      body.layout-novo .verso-bg {
+        background: none !important; 
+      }
+
+      /* Força a fonte Jost no verso inteiro do modelo novo */
+      body.layout-novo .verso-container,
+      body.layout-novo .tabela-notas th,
+      body.layout-novo .tabela-notas td,
+      body.layout-novo .rodape-verso-flex {
+        font-family: 'Jost', sans-serif !important;
       }
       
       body.layout-novo .cert-area-frente {
         display: flex !important;
         flex-direction: column !important;
+        justify-content: center !important; /* Força o texto a ficar no meio do espaço vertical */
         box-sizing: border-box !important;
         width: 100% !important;
-        padding-top: 35mm !important; 
-        padding-left: 120mm !important; /* Margem esquerda para fugir da arte laranja */
+        height: 100% !important; /* Essencial para centralizar verticalmente */
+        padding-top: 10mm !important; 
+        padding-bottom: 30mm !important; /* Dá espaço para as assinaturas embaixo */
+        padding-left: 120mm !important; /* Segura o texto longe da arte laranja */
         padding-right: 15mm !important;
-        text-align: right !important;
       }
       
-      body.layout-novo .cert-texto-top {
-        display: none !important; /* Esconde a linha de cima */
-      }
+      body.layout-novo .cert-texto-top { display: none !important; }
 
       body.layout-novo .cert-nome {
-        order: 1 !important; 
-        /* FONTE CORRIGIDA AQUI: Cy Grotesk V3 Wide */
-        font-family: 'Cy Grotesk V3 Wide', 'Cy Grotesk Wide', 'Arial Black', sans-serif !important; 
+        font-family: 'Cy Grotesk V3 Wide', 'Arial Black', sans-serif !important; 
         font-weight: 900 !important;
         color: #3b3a3a !important; 
-        font-size: 28pt !important; 
+        font-size: 26pt !important; /* Reduzido levemente para evitar sobreposição */
         text-align: right !important;
-        line-height: 1.1 !important;
-        margin-bottom: 12mm !important; 
+        line-height: 1.2 !important;
+        margin-bottom: 12mm !important; /* Afasta o parágrafo do nome */
         text-transform: uppercase !important;
       }
 
       body.layout-novo .cert-detalhes {
-        order: 2 !important; 
         font-family: 'Jost', sans-serif !important;
         font-size: 14pt !important;
         text-align: right !important;
         padding: 0 !important;
         color: #4a4a4a !important;
-        line-height: 1.6 !important;
+        line-height: 1.5 !important;
       }
       
-      /* Oculta a assinatura antiga (só aluno) e exibe a nova (Coordenador + Aluno) */
+      /* Oculta as assinaturas geradas pelo código (Já que você vai fixar na imagem JPG) */
       body.layout-novo .assinatura-aluno { display: none !important; }
-      body.layout-novo .assinaturas-novo {
-        display: flex !important;
-        justify-content: space-between !important;
-        position: absolute !important;
-        bottom: 25mm !important; 
-        left: 120mm !important; /* Alinhado com o texto de cima */
-        right: 15mm !important;
-      }
-      body.layout-novo .assinaturas-novo .coord-box { text-align: left !important; font-family: 'Jost', sans-serif !important; font-size: 10pt !important; line-height: 1.2 !important; color: #1a1a1a !important; }
-      body.layout-novo .assinaturas-novo .aluno-box { text-align: right !important; font-family: 'Jost', sans-serif !important; font-size: 10pt !important; line-height: 1.2 !important; color: #1a1a1a !important; }
-      body.layout-novo .assinaturas-novo b { font-size: 11pt !important; text-transform: uppercase !important; font-weight: 700 !important; }
-
+      body.layout-novo .assinaturas-novo { display: none !important; }
 
       /* =======================================================
-         ARTE 3 - PRÉ-IMPRESSO (SEM FUNDO)
+         ARTE 3 - PRÉ-IMPRESSO (SEM FUNDO EM NADA)
          ======================================================= */
       body.layout-novo.sem-fundo .frente-bg,
       body.layout-novo.sem-fundo .verso-bg {
@@ -488,9 +487,17 @@
 
     function sair() { location.reload(); }
 
-    async function buscar() {
+async function buscar() {
       let m = document.getElementById("mat").value;
       if(!m) return alert("Digite a matrícula.");
+      
+      // LIMPEZA DOS CAMPOS DE DATA E REGISTRO PARA NÃO MISTURAR ALUNOS
+      document.getElementById("dataIni").value = "";
+      document.getElementById("dataFim").value = "";
+      document.getElementById("livroFl").value = "";
+      document.getElementById("registroNum").value = "";
+      document.getElementById("dataReg").value = new Date().toISOString().split('T')[0];
+
       let btn = document.getElementById("btnBuscar");
       btn.innerHTML = `<i class="fas fa-spinner fa-spin me-1"></i> AGUARDE...`; btn.disabled = true;
 
@@ -562,7 +569,7 @@
 
       let res = await chamarAPI({ acao: "salvar", registro: registro });
 
-      if (res.sucesso) {
+if (res.sucesso) {
         document.getElementById('btnEmitir1').disabled = false;
         document.getElementById('btnEmitir2').disabled = false;
         document.getElementById('btnEmitir3').disabled = false;
@@ -576,10 +583,20 @@
         }
         
         prepararImpressao(d1, d2, dReg, fl, num, locAutomated, dadosAtuais, tipoAtual);
-        window.print();
         
-        // Remove a capa de CSS logo após fechar a janela de impressão, sem apagar os dados da tela!
-        setTimeout(() => { document.body.classList.remove('layout-novo', 'sem-fundo'); }, 1000);
+        // PEQUENO ATRASO (0.5s) PARA DAR TEMPO DA IMAGEM DE FUNDO RENDERIZAR (EVITA TELA BRANCA)
+        setTimeout(() => { 
+          window.print(); 
+          
+          // Limpa a tela logo após fechar a janela de impressão
+          document.body.classList.remove('layout-novo', 'sem-fundo'); 
+          document.getElementById("mat").value = "";
+          document.getElementById("dataIni").value = "";
+          document.getElementById("dataFim").value = "";
+          document.getElementById("livroFl").value = "";
+          document.getElementById("registroNum").value = "";
+          document.getElementById("infoCertificado").classList.add("oculto");
+        }, 500);
         
       } else {
         alert("Erro ao registrar no banco: " + res.msg);
